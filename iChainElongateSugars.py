@@ -1,4 +1,9 @@
-#iFerment181
+#iFerment182
+
+#Date: March 29, 2020
+#This is a merger of iFerment182 received from Matt
+#and Dan Noguera's edits to the iFerment181 received from Abel
+
 
 from __future__ import print_function
 from cobra import Model, Reaction, Metabolite
@@ -12,7 +17,7 @@ import math
 ###Part I: REACTOR PARAMETERS###
 ################################
 
-model = Model("iFerment181")
+model = Model("iFerment182")
 
 #Set reactor conditions
 T=35 #deg C
@@ -75,6 +80,12 @@ print("Genes: " + str(len(model.genes)))
 ################################
 ###Part II: BUILD THE MODEL#####
 ################################
+#Dummy metabolites
+ATP_SLP = Metabolite('ATP_SLP', formula='', name='', compartment='e', charge=0)
+ATP_IMF = Metabolite('ATP_IMF',formula='', name='', compartment='e', charge=0)
+ATP_BIOMASS = Metabolite('ATP_BIOMASS',formula='', name='', compartment='e', charge=0)
+ATP_HYDR = Metabolite('ATP_HYDR',formula='', name='', compartment='e', charge=0)
+ATP_TRANS = Metabolite('ATP_TRANS',formula='', name='', compartment='e', charge=0)
 
 #Complex Carbohydrate Degradation
 
@@ -227,7 +238,8 @@ reaction.add_metabolites({atp_c: -1.0,
                           adp_c: 1.0,
                           h_c: 1.0,
                           pi_c: 1.0,
-                          xyl__D_c: 1.0})
+                          xyl__D_c: 1.0,
+                          ATP_SLP: -1.0})
 
 model.add_reactions([reaction])
 
@@ -264,7 +276,8 @@ reaction.add_metabolites({atp_c: -1.0,
                           xylu__D_c: -1.0,
                           adp_c: 1.0,
                           h_c: 1.0,
-                          xu5p__D_c: 1.0})
+                          xu5p__D_c: 1.0,
+                          ATP_SLP: -1.0})
 
 model.add_reactions([reaction])
 
@@ -432,7 +445,8 @@ reaction.add_metabolites({atp_c: -1.0,
                           adp_c: 1.0,
                           h_c: 1.0,
                           pi_c: 1.0,
-                          glc__D_c: 1.0})
+                          glc__D_c: 1.0,
+                          ATP_SLP:-1.0})
 
 model.add_reactions([reaction])
 
@@ -452,13 +466,14 @@ reaction.add_metabolites({atp_c: -1.0,
                           glc__D_c: -1.0,
                           adp_c: 1.0,
                           g6p_c: 1.0,
-                          h_c: 1.0})
+                          h_c: 1.0,
+                          ATP_SLP: -1.0})
 
 model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#atp_c + glc__D_c <-> adp_c + g6p_c + h_c
+#g6p_c <-> f6p_c
 
 reaction = Reaction('PGI')
 reaction.name = 'Glucose-6-phosphate isomerase'
@@ -512,7 +527,8 @@ reaction.add_metabolites({atp_c: -1.0,
                           f6p_c: -1.0,
                           adp_c: 1.0,
                           fdp_c: 1.0,
-                          h_c: 1.0})
+                          h_c: 1.0,
+                          ATP_SLP: -1.0})
 
 
 model.add_reactions([reaction])
@@ -593,7 +609,8 @@ reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({_3pg_c: -1.0,
                           atp_c: -1.0,
                           _13dpg_c: 1.0,
-                          adp_c: 1.0})
+                          adp_c: 1.0,
+                          ATP_SLP: -1.0})
 
 model.add_reactions([reaction])
 
@@ -648,7 +665,8 @@ reaction.add_metabolites({adp_c: -1.0,
                           h_c: -1.0,
                           pep_c: -1.0,
                           atp_c: 1.0,
-                          pyr_c: 1.0})
+                          pyr_c: 1.0,
+                          ATP_SLP: 1.0})
 
 model.add_reactions([reaction])
 
@@ -672,7 +690,8 @@ reaction.add_metabolites({atp_c: -1.0,
                           amp_c: 1.0,
                           h_c: 2.0,
                           pep_c: 1.0,
-                          pi_c: 1.0})
+                          pi_c: 1.0,
+                          ATP_SLP: -1.0})
 
 model.add_reactions([reaction])
 
@@ -734,7 +753,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#lac_D_c + 2 nad_c + fdred_c -> pyr_c + 2 nadh + fdox_c + h_c
+#lac_D_c + 2 nad_c + fdred_c -> pyr_c + 2 nadh + fdox_c
 
 fdred_c = Metabolite('fdred_c', formula='Fe8S8X', name='Ferredoxin (reduced) 2[4Fe-4S]', compartment='c', charge= -2)
 fdox_c = Metabolite('fdox_c', formula='Fe8S8X', name='Ferredoxin (oxidized) 2[4Fe-4S]', compartment='c', charge= 0)
@@ -826,7 +845,8 @@ reaction.upper_bound = 1000.  # This is the default
 reaction.add_metabolites({ac_c: -1.0,
                          atp_c: -1.0,
                          actp_c: 1.0,
-                         adp_c: 1.0})
+                         adp_c: 1.0,
+                         ATP_SLP: -1.0})
 
 model.add_reactions([reaction])
 
@@ -892,8 +912,9 @@ print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 #coa_c + pyr_c + fdox_c <-> accoa_c + co2_c + fdred_c + h_c
 
-fdred_c = Metabolite('fdred_c', formula='Fe8S8X', name='Ferredoxin (reduced) 2[4Fe-4S]', compartment='c', charge= -2)
-fdox_c = Metabolite('fdox_c', formula='Fe8S8X', name='Ferredoxin (oxidized) 2[4Fe-4S]', compartment='c', charge= 0)
+#fdred_c and fdox_c were already defined above ~ lines 739-740
+#fdred_c = Metabolite('fdred_c', formula='Fe8S8X', name='Ferredoxin (reduced) 2[4Fe-4S]', compartment='c', charge= -2)
+#fdox_c = Metabolite('fdox_c', formula='Fe8S8X', name='Ferredoxin (oxidized) 2[4Fe-4S]', compartment='c', charge= 0)
 co2_c = Metabolite('co2_c', formula='CO2', name='CO2', compartment='c', charge= 0)
 
 reaction = Reaction('PFOR')
@@ -1035,7 +1056,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#btcoa_c + h2o_c <-> but_c + coa_c
+#btcoa_c + h2o_c <-> but_c + coa_c + h_c
 
 but_c = Metabolite('but_c', formula='C4H7O2', name='Butyrate (n-C4:0)', compartment='c', charge= -1)
 
@@ -1095,9 +1116,9 @@ print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 #Hexanoate Production (Cycle 2)
 
-# accoa_x + btcoa_x <-> coa_x + 3ohcoa_x
+# accoa_c + btcoa_c <-> coa_c + 3ohcoa_c
 
-_3ohcoa_c = Metabolite('3ohcoa_c', formula='C27H40N7O18P3S', name='3-Oxohexanoyl-CoA', compartment='c', charge=-4)
+_3ohcoa_c = Metabolite('_3ohcoa_c', formula='C27H40N7O18P3S', name='3-Oxohexanoyl-CoA', compartment='c', charge=-4)
 
 reaction = Reaction('ACACT2')
 reaction.name = 'Butanoyl-CoA:acetyl-CoA C-butanoyltransferase'
@@ -1192,7 +1213,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#hxcoa_c + h2o_c <-> but_c + coa_c
+#hxcoa_c + h2o_c <-> hxa_c + coa_c + h_c
 
 hxa_c = Metabolite('hxa_c', formula='C6H11O2', name='Hexanoate (n-C6:0)', compartment='c', charge= -1)
 
@@ -1217,7 +1238,7 @@ print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 reaction = Reaction('CoATC6')
 #BiGG does not have this specific acyl-CoA hydrolase reaction
-reaction.name = '*CoA Transferase (C4:0-C2:0)'
+reaction.name = '*CoA Transferase (C6:0-C2:0)'
 reaction.subsystem = 'Reverse Beta Oxidation'
 reaction.lower_bound = 0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
@@ -1231,11 +1252,11 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#hex_e <-> but_c
+#hxa_e <-> hxa_c
 
 hxa_e = Metabolite('hxa_e', formula='C6H11O2', name='Hexanoate (n-C6:0)', compartment='e', charge= -1)
 
-#hex_e <->
+#hxa_e <->
 
 reaction = Reaction('EX_hxa_e')
 reaction.name = 'Hexanoate exchange'
@@ -1349,7 +1370,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#occoa_c + h2o_c <-> octa_c + coa_c
+#occoa_c + h2o_c <-> octa_c + coa_c + h_c
 
 octa_c = Metabolite('octa_c', formula='C8H15O2', name='Octanoate (n-C8:0)', compartment='c', charge= -1)
 
@@ -1453,7 +1474,7 @@ print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 #lactoyl-CoA dehydratase
 
-laccoa_c = Metabolite('laccoa_c', formula='C24H36N7O18P3S', name='Lactoyl-CoA', compartment='c', charge=-4)
+#defined above laccoa_c = Metabolite('laccoa_c', formula='C24H36N7O18P3S', name='Lactoyl-CoA', compartment='c', charge=-4)
 pp2coa_c = Metabolite('pp2coa_c', formula='C24H34N7O17P3S', name='Acrylyl-CoA', compartment='c', charge=-4)
 
 reaction = Reaction('LCD')
@@ -1473,7 +1494,7 @@ print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 #acryloyl-CoA reductase
 
-ppcoa_c = Metabolite('ppcoa_c', formula='C24H36N7O17P3S', name='Propanoyl-CoA', compartment='c', charge=-4)
+#defined already ppcoa_c = Metabolite('ppcoa_c', formula='C24H36N7O17P3S', name='Propanoyl-CoA', compartment='c', charge=-4)
 
 #Reaction not in BIGG Database
 
@@ -1537,6 +1558,8 @@ print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 
 #malate dehydrogenase
+# oaa_c + nadh_c + h_c --> nad_c + mal__L_c
+
 mal__L_c = Metabolite('mal__L_c', formula='C4H4O5', name='L-Malate', compartment='c', charge=-2)
 
 reaction = Reaction('MDH')
@@ -1556,6 +1579,7 @@ model.add_reactions([reaction])
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 #fumarate reductase NADH
+#fum_c +nadh_c +h_c -> nad_c + succ_c
 
 succ_c = Metabolite('succ_c', formula='C4H4O4', name='Succinate', compartment='c', charge=-2)
 fum_c = Metabolite('fum_c', formula='C4H2O4', name='Fumarate', compartment='c', charge=-2)
@@ -2049,7 +2073,8 @@ reaction.add_metabolites({glyc_c: -1.0,
                           atp_c: -1.0,
                           adp_c: 1.0,
                           glyc3p_c: 1.0,
-                          h_c: 1.0})
+                          h_c: 1.0,
+                          ATP_SLP: -1.0})
 
 model.add_reactions([reaction])
 
@@ -2174,178 +2199,167 @@ model.add_reactions([reaction])
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 ###Homoacetogensis
-
+"""
 #for_c + nad_c <-> co2_c + nadh_c
-#####remove FDH reaction as it is not present in SEO reactions
 
-##reaction = Reaction('FDH')
-#reaction.name = 'Formate dehydrogenase'
-#reaction.subsystem = 'Wood Ljungadhl Pathway'
-#reaction.lower_bound = -1000.  # This is the default
-#reaction.upper_bound = 1000.  # This is the default
+reaction = Reaction('FDH')
+reaction.name = 'Formate dehydrogenase'
+reaction.subsystem = 'Wood Ljungadhl Pathway'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
 
-#reaction.add_metabolites({for_c: -1.0,
-#                          nad_c: -1.0,
-#                          co2_c: 1.0,
-#                          nadh_c: 1.0})
+reaction.add_metabolites({for_c: -1.0,
+                          nad_c: -1.0,
+                          co2_c: 1.0,
+                          nadh_c: 1.0})
 
-#model.add_reactions([reaction])
+model.add_reactions([reaction])
 
-#print(reaction.name + ": " + str(reaction.check_mass_balance()))
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 #atp_c + for_c + thf_c -> 10fthf_c + adp_c + pi_c
 
-#thf_c = Metabolite('thf_c', formula='C19H21N7O6', name='5,6,7,8-Tetrahydrofolate', compartment='c', charge= -2)
-#_10fthf_c = Metabolite('_10fthf_c', formula='C20H21N7O7', name='10-Formyltetrahydrofolate', compartment='c', charge= -2)
+thf_c = Metabolite('thf_c', formula='C19H21N7O6', name='5,6,7,8-Tetrahydrofolate', compartment='c', charge= -2)
+_10fthf_c = Metabolite('_10fthf_c', formula='C20H21N7O7', name='10-Formyltetrahydrofolate', compartment='c', charge= -2)
 
-#####remove FTHFLi reaction as it is not present in SEO reactions
+reaction = Reaction('FTHFLi')
+reaction.name = 'Formate-tetrahydrofolate ligase'
+reaction.subsystem = 'Wood Ljungadhl Pathway'
+reaction.lower_bound = 0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
 
-#reaction = Reaction('FTHFLi')
-#reaction.name = 'Formate-tetrahydrofolate ligase'
-#reaction.subsystem = 'Wood Ljungadhl Pathway'
-#reaction.lower_bound = 0.  # This is the default
-#reaction.upper_bound = 1000.  # This is the default
+reaction.add_metabolites({for_c: -1.0,
+                          atp_c: -1.0,
+                          thf_c: -1.0,
+                          _10fthf_c: 1.0,
+                          adp_c: 1.0,
+                          pi_c: 1.0,
+                          ATP_SLP: -1.0})
 
-#reaction.add_metabolites({for_c: -1.0,
-#                          atp_c: -1.0,
-#                          thf_c: -1.0,
-#                          _10fthf_c: 1.0,
-#                          adp_c: 1.0,
-#                          pi_c: 1.0})
+model.add_reactions([reaction])
 
-#model.add_reactions([reaction])
-
-#print(reaction.name + ": " + str(reaction.check_mass_balance()))
-
-####remove MTHFC reaction as it is not present in SEO reactions
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 # 10fthf_c + h_c <-> h2o_c + methf_c
 
-#methf_c = Metabolite('methf_c', formula='C20H20N7O6', name='5,10-Methenyltetrahydrofolate', compartment='c', charge= -1)
+methf_c = Metabolite('methf_c', formula='C20H20N7O6', name='5,10-Methenyltetrahydrofolate', compartment='c', charge= -1)
 
-#reaction = Reaction('MTHFC')
-#reaction.name = 'Methenyltetrahydrofolate cyclohydrolase'
-#reaction.subsystem = 'Wood Ljungadhl Pathway'
-#reaction.lower_bound = -1000.  # This is the default
-#reaction.upper_bound = 1000.  # This is the default
+reaction = Reaction('MTHFC')
+reaction.name = 'Methenyltetrahydrofolate cyclohydrolase'
+reaction.subsystem = 'Wood Ljungadhl Pathway'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
 
-#reaction.add_metabolites({ _10fthf_c: -1.0,
-#                          h_c: -1.0,
-#                          h2o_c: 1.0,
-#                          methf_c: 1.0})
+reaction.add_metabolites({ _10fthf_c: -1.0,
+                          h_c: -1.0,
+                          h2o_c: 1.0,
+                          methf_c: 1.0})
 
-#model.add_reactions([reaction])
+model.add_reactions([reaction])
 
-#print(reaction.name + ": " + str(reaction.check_mass_balance()))
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 # methf_c + nadh_c <-> mlthf_c + nad_c
 
-#remove MTHFD2i reaction as it is not present in SEO reactions
+mlthf_c = Metabolite('mlthf_c', formula='C20H21N7O6', name='5,10-Methylenetetrahydrofolate', compartment='c', charge= -2)
 
-#mlthf_c = Metabolite('mlthf_c', formula='C20H21N7O6', name='5,10-Methylenetetrahydrofolate', compartment='c', charge= -2)
+reaction = Reaction('MTHFD2i')
+reaction.name = 'Methylenetetrahydrofolate dehydrogenase NAD'
+reaction.subsystem = 'Wood Ljungadhl Pathway'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
 
-#reaction = Reaction('MTHFD2i')
-#reaction.name = 'Methylenetetrahydrofolate dehydrogenase NAD'
-#reaction.subsystem = 'Wood Ljungadhl Pathway'
-#reaction.lower_bound = -1000.  # This is the default
-#reaction.upper_bound = 1000.  # This is the default
+reaction.add_metabolites({methf_c: -1.0,
+                          nadh_c: -1.0,
+                          mlthf_c: 1.0,
+                          nad_c: 1.0})
 
-#reaction.add_metabolites({methf_c: -1.0,
-#                          nadh_c: -1.0,
-#                          mlthf_c: 1.0,
-#                          nad_c: 1.0})
+model.add_reactions([reaction])
 
-#model.add_reactions([reaction])
-
-#print(reaction.name + ": " + str(reaction.check_mass_balance()))
-
-#remove MTHFR2 reaction as it is not present in SEO reactions
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 #2.0 h_c + mlthf_c + nadh_c -> 5mthf_c + nad_c
 
-#_5mthf_c = Metabolite('_5mthf_c', formula='C20H24N7O6', name='5-Methyltetrahydrofolate', compartment='c', charge= -1)
+_5mthf_c = Metabolite('_5mthf_c', formula='C20H24N7O6', name='5-Methyltetrahydrofolate', compartment='c', charge= -1)
 
-#reaction = Reaction('MTHFR2')
-#reaction.name = '5,10-methylenetetrahydrofolate reductase (NADH)'
-#reaction.subsystem = 'Wood Ljungadhl Pathway'
-#reaction.lower_bound = 0.  # This is the default
-#reaction.upper_bound = 1000.  # This is the default
+reaction = Reaction('MTHFR2')
+reaction.name = '5,10-methylenetetrahydrofolate reductase (NADH)'
+reaction.subsystem = 'Wood Ljungadhl Pathway'
+reaction.lower_bound = 0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
 
-#reaction.add_metabolites({mlthf_c: -1.0,
-#                          nadh_c: -1.0,
-#                          h_c: -2.0,
-#                          _5mthf_c: 1.0,
-#                          nad_c: 1.0})
+reaction.add_metabolites({mlthf_c: -1.0,
+                          nadh_c: -1.0,
+                          h_c: -2.0,
+                          _5mthf_c: 1.0,
+                          nad_c: 1.0})
 
-#model.add_reactions([reaction])
+model.add_reactions([reaction])
 
-# print(reaction.name + ": " + str(reaction.check_mass_balance()))
-
-#remove METR reaction as it is not present in SEO reactions
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 # 5mthf_c + cfesp_c -> thf_c + mecfsp_c
 
-#cfesp_c = Metabolite('cfesp_c', formula='C19CoN4R21', name='Corrinoid Iron sulfur protein', compartment='c', charge=-1)
-#mecfsp_c = Metabolite('mecfsp_c', formula='C20H3CoN4R21', name='Methylcorrinoid iron sulfur protein', compartment='c', charge=0)
+cfesp_c = Metabolite('cfesp_c', formula='C19CoN4R21', name='Corrinoid Iron sulfur protein', compartment='c', charge=-1)
+mecfsp_c = Metabolite('mecfsp_c', formula='C20H3CoN4R21', name='Methylcorrinoid iron sulfur protein', compartment='c', charge=0)
 
-#reaction = Reaction('METR')
-#reaction.name = 'Methyltetrahydrofolate:corrinoid/iron-sulfur protein methyltransferase (MeTr)'
-#reaction.subsystem = 'Wood Ljungadhl Pathway'
-#reaction.lower_bound = 0.  # This is the default
-#reaction.upper_bound = 1000.  # This is the default
+reaction = Reaction('METR')
+reaction.name = 'Methyltetrahydrofolate:corrinoid/iron-sulfur protein methyltransferase (MeTr)'
+reaction.subsystem = 'Wood Ljungadhl Pathway'
+reaction.lower_bound = 0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
 
-#reaction.add_metabolites({_5mthf_c: -1.0,
-#                          cfesp_c: -1.0,
-#                          thf_c: 1.0,
-#                          mecfsp_c: 1.0})
+reaction.add_metabolites({_5mthf_c: -1.0,
+                          cfesp_c: -1.0,
+                          thf_c: 1.0,
+                          mecfsp_c: 1.0})
 
-#model.add_reactions([reaction])
+model.add_reactions([reaction])
 
-#print(reaction.name + ": " + str(reaction.check_mass_balance()))
-
-#remove CODH4 reaction as it is not present in SEO reactions
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 #co2_c + 2.0 h_c + fdred_c <-> h2o_c + co_c + fdox__c
 #BIGG uses a differnt form of ferredoxin
 
-#co_c = Metabolite('co_c', formula='CO', name='Carbon monoxide', compartment='c', charge=0)
+co_c = Metabolite('co_c', formula='CO', name='Carbon monoxide', compartment='c', charge=0)
 
-#reaction = Reaction('CODH4')
-#reaction.name = 'Carbon monoxide dehydrogenase / acetyl-CoA synthase 2'
-#reaction.subsystem = 'Wood Ljungadhl Pathway'
-#reaction.lower_bound = -1000.  # This is the default
-#reaction.upper_bound = 1000.  # This is the default
+reaction = Reaction('CODH4')
+reaction.name = 'Carbon monoxide dehydrogenase / acetyl-CoA synthase 2'
+reaction.subsystem = 'Wood Ljungadhl Pathway'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
 
-#reaction.add_metabolites({co2_c: -1.0,
-#                          h_c: -2.0,
-#                          fdred_c: -1.0,
-#                          h2o_c: 1.0,
-#                          co_c: 1.0,
-#                          fdox_c: 1.0})
+reaction.add_metabolites({co2_c: -1.0,
+                          h_c: -2.0,
+                          fdred_c: -1.0,
+                          h2o_c: 1.0,
+                          co_c: 1.0,
+                          fdox_c: 1.0})
 
-#model.add_reactions([reaction])
+model.add_reactions([reaction])
 
-#print(reaction.name + ": " + str(reaction.check_mass_balance()))
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 
 #co_c + coa_c  + mecfsp_c -> accoa_c + cfesp_c + h_c
 
-#reaction = Reaction('*ACSWL')
-#reaction.name = 'Acetyl-CoA synthase'
-#reaction.subsystem = 'Wood Ljungadhl Pathway'
-#reaction.lower_bound = 0.  # This is the default
-#reaction.upper_bound = 1000.  # This is the default
+reaction = Reaction('*ACSWL')
+reaction.name = 'Acetyl-CoA synthase'
+reaction.subsystem = 'Wood Ljungadhl Pathway'
+reaction.lower_bound = 0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
 
-#reaction.add_metabolites({co_c: -1.0,
-#                          coa_c: -1.0,
-#                          mecfsp_c: -1.0,
-#                          accoa_c: 1.0,
-#                          cfesp_c: 1.0,
-#                          h_c: 1.0})
+reaction.add_metabolites({co_c: -1.0,
+                          coa_c: -1.0,
+                          mecfsp_c: -1.0,
+                          accoa_c: 1.0,
+                          cfesp_c: 1.0,
+                          h_c: 1.0})
 
-#model.add_reactions([reaction])
+model.add_reactions([reaction])
 
-#print(reaction.name + ": " + str(reaction.check_mass_balance()))
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+"""
 
 ###Energy Generation
 
@@ -2536,7 +2550,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#accoa_c + h2o_c + oaa_c -> cit_c + coa_c + h_c
+#cit_c -> icit_c
 
 icit_c = Metabolite('icit_c', formula='C6H5O7', name='Isocitrate', compartment='c', charge=-3)
 
@@ -2643,6 +2657,8 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
+#icit_c -> glx_c + succ_c
+
 glx_c = Metabolite('glx_c', formula='C2HO3', name='Glyxoxylate', compartment='c', charge=-1)
 
 reaction = Reaction('ICL')
@@ -2659,7 +2675,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# accoa_c + glx_c + h2o_c <->g coa_c + h_c + mal__L_c
+# accoa_c + glx_c + h2o_c <-> coa_c + h_c + mal__L_c
 
 reaction = Reaction('HAO_MALS')
 reaction.name = 'Malate synthase'
@@ -2715,7 +2731,8 @@ reaction.add_metabolites({atp_c: -1.0,
                           nad_c: -1.0,
                           adp_c: 1.0,
                           h_c: 1.0,
-                          nadp_c: 1.0})
+                          nadp_c: 1.0,
+                          ATP_SLP: -1.0})
 
 model.add_reactions([reaction])
 
@@ -2817,7 +2834,8 @@ reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({amp_c: -1.0,
                           atp_c: -1.0,
-                          adp_c: 2.0})
+                          adp_c: 2.0,
+                          ATP_SLP: -1.0})
 
 
 model.add_reactions([reaction])
@@ -2897,35 +2915,36 @@ reaction.subsystem = 'Biomass'
 reaction.lower_bound = 0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
-reaction.add_metabolites({akg_c: -0.00117,
-                          oaa_c: -0.00206,
-                          g6p_c: -0.00026,
-                          g3p_c: -0.00158,
-                          _3pg_c: -0.00131,
-                          pyr_c: -0.00433,
-                          pep_c: -0.00092,
-                          accoa_c: -0.00306,
-                          e4p_c: -0.00040,
-                          r5p_c: -0.00035,
-                          fum_c: 0.00037,
-                          ac_c: 0.00043,
-                          for_c: 0.00029,
-                          atp_c: -0.0360,
-                          nadph_c: -0.01939,
-                          nadh_c: 0.00110,
-                          nh4_c: -0.00862,
-                          h_c: 0.01013,
-                          adp_c: 0.0346,
-                          pi_c: 0.03188,
-                          ppi_c: 0.00474,
-                          amp_c: 0.0014,
-                          co2_c: 0.00354,
-                          h2o_c: -0.00757,
-                          coa_c: 0.00306,
-                          nad_c: -0.00110,
-                          nadp_c: 0.01939,
-                          so4_c: -0.00021,
-                          BIOMASS: 1})
+reaction.add_metabolites({akg_c: -1.17,
+                          oaa_c: -2.06,
+                          g6p_c: -0.26,
+                          g3p_c: -1.58,
+                          _3pg_c: -1.31,
+                          pyr_c: -4.33,
+                          pep_c: -0.92,
+                          accoa_c: -3.06,
+                          e4p_c: -0.40,
+                          r5p_c: -0.35,
+                          fum_c: 0.37,
+                          ac_c: 0.43,
+                          for_c: 0.29,
+                          atp_c: -36.0,
+                          nadph_c: -19.39,
+                          nadh_c: 1.10,
+                          nh4_c: -8.62,
+                          h_c: 10.13,
+                          adp_c: 34.6,
+                          pi_c: 31.88,
+                          ppi_c: 4.74,
+                          amp_c: 1.4,
+                          co2_c: 3.54,
+                          h2o_c: -7.57,
+                          coa_c: 3.06,
+                          nad_c: -1.10,
+                          nadp_c: 19.39,
+                          so4_c: -0.21,
+                          BIOMASS: 1,
+                          ATP_BIOMASS: -36.0})
 
 
 model.add_reactions([reaction])
@@ -2957,7 +2976,8 @@ reaction.add_metabolites({atp_c: -1.0,
                           h2o_c: -1.0,
                           adp_c: 1.0,
                           pi_c: 1.0,
-                          h_c: 1.0})
+                          h_c: 1.0,
+                          ATP_HYDR: -1.0})
 
 model.add_reactions([reaction])
 
@@ -3322,7 +3342,8 @@ reaction.add_metabolites({atp_c: -1.0,
                           h2o_c: -1.0,
                           adp_c: 1.0,
                           pi_c: 1.0,
-                          h_c: 1.0})
+                          h_c: 1.0,
+                          ATP_TRANS: -1.0})
 
 model.add_reactions([reaction])
 
@@ -3340,7 +3361,8 @@ reaction.add_metabolites({atp_c: -1.0,
                           h2o_c: -1.0,
                           adp_c: 1.0,
                           pi_c: 1.0,
-                          h_c: 1.0})
+                          h_c: 1.0,
+                          ATP_TRANS: -1.0})
 
 model.add_reactions([reaction])
 
@@ -3358,7 +3380,8 @@ reaction.add_metabolites({atp_c: -1.0,
                           h2o_c: -1.0,
                           adp_c: 1.0,
                           pi_c: 1.0,
-                          h_c: 1.0})
+                          h_c: 1.0,
+                          ATP_TRANS: -1.0})
 
 model.add_reactions([reaction])
 
@@ -3376,7 +3399,8 @@ reaction.add_metabolites({atp_c: -1.0,
                           h2o_c: -1.0,
                           adp_c: 1.0,
                           pi_c: 1.0,
-                          h_c: 1.0})
+                          h_c: 1.0,
+                          ATP_TRANS: -1.0})
 
 model.add_reactions([reaction])
 
@@ -3394,7 +3418,8 @@ reaction.add_metabolites({atp_c: -1.0,
                           h2o_c: -1.0,
                           adp_c: 1.0,
                           pi_c: 1.0,
-                          h_c: 1.0})
+                          h_c: 1.0,
+                          ATP_TRANS: -1.0})
 
 model.add_reactions([reaction])
 
@@ -3412,7 +3437,8 @@ reaction.add_metabolites({atp_c: -1.0,
                           h2o_c: -1.0,
                           adp_c: 1.0,
                           pi_c: 1.0,
-                          h_c: 1.0})
+                          h_c: 1.0,
+                          ATP_TRANS: -1.0})
 
 model.add_reactions([reaction])
 
@@ -3430,7 +3456,8 @@ reaction.add_metabolites({atp_c: -1.0,
                           h2o_c: -1.0,
                           adp_c: 1.0,
                           pi_c: 1.0,
-                          h_c: 1.0})
+                          h_c: 1.0,
+                          ATP_TRANS: -1.0})
 
 model.add_reactions([reaction])
 
@@ -3448,7 +3475,8 @@ reaction.add_metabolites({atp_c: -1.0,
                           h2o_c: -1.0,
                           adp_c: 1.0,
                           pi_c: 1.0,
-                          h_c: 1.0})
+                          h_c: 1.0,
+                          ATP_TRANS: -1.0})
 
 model.add_reactions([reaction])
 
@@ -3466,7 +3494,8 @@ reaction.add_metabolites({atp_c: -1.0,
                           h2o_c: -1.0,
                           adp_c: 1.0,
                           pi_c: 1.0,
-                          h_c: 1.0})
+                          h_c: 1.0,
+                          ATP_TRANS: -1.0})
 
 model.add_reactions([reaction])
 
@@ -3484,7 +3513,8 @@ reaction.add_metabolites({atp_c: -1.0,
                           h2o_c: -1.0,
                           adp_c: 1.0,
                           pi_c: 1.0,
-                          h_c: 1.0})
+                          h_c: 1.0,
+                          ATP_TRANS: -1.0})
 
 model.add_reactions([reaction])
 
@@ -3501,7 +3531,8 @@ reaction.add_metabolites({atp_c: -1.0,
                           h2o_c: -1.0,
                           adp_c: 1.0,
                           pi_c: 1.0,
-                          h_c: 1.0})
+                          h_c: 1.0,
+                          ATP_TRANS: -1.0})
 
 model.add_reactions([reaction])
 
@@ -3596,6 +3627,68 @@ if TransEnergetics == True:
         Constraint_trans_Ethanol = model.problem.Constraint(model.reactions.Ethanol_Transport_ATP.flux_expression - ATP_trans_Ethanol* model.reactions.Ethanol_export.flux_expression, lb=0, ub=0)
         model.add_cons_vars(Constraint_trans_Ethanol)
 
+#ATP Accounting
+
+reaction = Reaction('ATP_SLP')
+reaction.name = 'ATP produced via substrate-level phosphorylation'
+reaction.subsystem = 'Exchange'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({ATP_SLP: -1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+reaction = Reaction('ATP_HYDR')
+reaction.name = 'ATP (excess) consumed via hydrolysis'
+reaction.subsystem = 'Exchange'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({ATP_HYDR: -1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+reaction = Reaction('ATP_IMF')
+reaction.name = 'ATP produced via ion motive force '
+reaction.subsystem = 'Exchange'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({ATP_IMF: -1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+reaction = Reaction('ATP_TRANS')
+reaction.name = 'ATP consumed for transport'
+reaction.subsystem = 'Exchange'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({ATP_TRANS: -1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+reaction = Reaction('ATP_BIOMASS')
+reaction.name = 'ATP consumed via biomass equation'
+reaction.subsystem = 'Exchange'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({ATP_BIOMASS: -1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
 
 #Summarize Model Reactions and Metabolites
 print("Reactions: " + str(len(model.reactions)))
@@ -3613,9 +3706,9 @@ medium = model.medium
 medium["EX_xyl__D_e"] = 0.05 #0.1317 #mmol/hr/gDW
 medium["EX_xyl4_e"] = 0 #0.0081 #mmol/hr/gDW
 medium["EX_glc4_e"] = 0 #0.0081 #mmol/hr/gDW
-medium["EX_glc__D_e"] = 0 #.0125 #mmol/hr/gDW
+medium["EX_glc__D_e"] = 0 #0.0125 #mmol/hr/gDW
 medium["EX_glyc_e"] = 0 #0.0360 #mmol/hr/gDW
-medium["EX_lac__D_e"] = 0 #0.00 #mmol/hr/gDW
+medium["EX_lac__D_e"] = 0 #0.0005 #mmol/hr/gDW
 medium["EX_etoh_e"] = 0
 medium["EX_ac_e"] = 0
 medium["EX_but_e"] = 0
@@ -3655,6 +3748,9 @@ print (model.medium)
 #model.reactions.ACKr.knock_out()
 #model.reactions.ACKr.lower_bound = 0
 
+#Turn off alcohol dehydrogenase (ethanol production)
+#model.reactions.ALCD2x.knock_out()
+
 #Turn off electron bifurcating acyl-CoA dehydrogenase
 #model.reactions.EBACD1.knock_out()
 #model.reactions.EBACD2.knock_out()
@@ -3676,6 +3772,13 @@ model.reactions.VCOAD2.knock_out()
 #model.reactions.CoATC8.knock_out()
 #model.reactions.CoATC5.knock_out()
 #model.reactions.CoATC7.knock_out()
+
+#Turn off Reverse beta oxidation in second step (HACD) Only need to restrict first one
+#model.reactions.HACD1.knock_out()
+#model.reactions.HACD2.knock_out()
+#model.reactions.HACD3.knock_out()
+#model.reactions.HVCD.knock_out()
+#model.reactions.HVCD2.knock_out()
 
 #Turn of RNF Complex
 #model.reactions.RNF1.knock_out()
@@ -3717,8 +3820,8 @@ model.reactions.HYDABC.knock_out()
 #model.reactions.FDH.knock_out()
 
 #This is where we set the objective function
-#model.objective = 'EX_BIOMASS'
-model.objective = 'ATP_Hydrolysis'
+model.objective = 'EX_BIOMASS'
+#model.objective = 'ATP_Hydrolysis'
 #model.objective = 'EX_octa_e'
 #model.objective = 'EX_lac__D_e'
 #model.objective = 'EX_ppa_e'
@@ -3826,12 +3929,25 @@ dG0_prime = dG0 + ((8.3145*10**-3)*298)*numpy.log((10**(-7))**H)
 
 print ("dG0_prime: ", dG0_prime)
 
-"""G_Per_ATP = dG0_prime/pfba_solution["ATP_Hydrolysis"]
+NET_ATP = 0
+if pfba_solution["ATP_HYDR"] < 0:
+    NET_ATP += -1*pfba_solution["ATP_HYDR"]
+if pfba_solution["ATP_BIOMASS"] < 0:
+    NET_ATP += -1*pfba_solution["ATP_BIOMASS"]
+if pfba_solution["ATP_IMF"] < 0:
+    NET_ATP += -1 * pfba_solution["ATP_IMF"]
+if pfba_solution["ATP_TRANS"] < 0:
+    NET_ATP += -1*pfba_solution["ATP_TRANS"]
+if pfba_solution["ATP_SLP"] < 0:
+    NET_ATP += -1*pfba_solution["ATP_SLP"]
+
+
+G_Per_ATP = dG0_prime/NET_ATP
 
 print ("G_Per_ATP: ", G_Per_ATP)
 
 if G_Per_ATP > -50:
-    print ("Free Energy per mol ATP < 60 kJ")"""
+    print ("Free Energy per mol ATP < 60 kJ")
 
 rxn_count = 0
 for n in pfba_solution.fluxes:
@@ -3872,13 +3988,23 @@ print (type(model.solver))
 #print (fva)
 
 #Print FVA results to excel
-#writer = pandas.ExcelWriter('FVA_iFerment177_NoProdConstr.xlsx')
+#writer = pandas.ExcelWriter('FVA_iFerment182.xlsx')
 #fva.to_excel(writer,'Sheet1')
 #writer.save()
 
 #Create .SBML model for use in other modeling platforms
 
 #cobra.io.write_sbml_model(model, "iChainElongateSugars.xml")
+
+
+#####################################
+###DRN ADDITIONS APRIL 2020
+#####################################
+
+#Print the steady state xylose and biomass fluxes
+print ("XYL: ",XYL)
+BIOM = pfba_solution["EX_BIOMASS"]
+print ("BIOMASS: ",BIOM)
 
 #####################################
 ###AMMENDMENT I: ESSENTIAL PROTEINS##
@@ -3889,7 +4015,9 @@ for reaction in model.reactions:
     ub = model.reactions[n].upper_bound
     lb = model.reactions[n].lower_bound
     model.reactions[n].knock_out()
-    print(model.reactions[n], cobra.flux_analysis.pfba(model).fluxes['ATP_Hydrolysis'])
+    #print(model.reactions[n], cobra.flux_analysis.pfba(model).fluxes['ATP_Hydrolysis'])
     model.reactions[n].upper_bound = ub
     model.reactions[n].lower_bound = lb
     n = n + 1
+
+
