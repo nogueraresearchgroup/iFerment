@@ -1,8 +1,10 @@
 #iFerment182
 
-#Date: March 29, 2020
-#This is a merger of iFerment182 received from Matt
-#and Dan Noguera's edits to the iFerment181 received from Abel
+#Date: May 06, 2020
+#This is iChainElongate-drnv3.py 
+#(a merger of iFerment182 received from Matt
+#and Dan Noguera's edits to the iFerment181 received from Abel)
+#with additional code to include the ability to produce extracellular succinate
 
 
 from __future__ import print_function
@@ -25,8 +27,8 @@ pH_out = 5.5 #s.u.
 
 ##Consider Transport Energetics
 
-TransEnergetics = True
-#TransEnergetics = False
+#TransEnergetics = True
+TransEnergetics = False
 
 ##Set Extracellular Concentrations of unprotonated forms (M)
 S_Ethanol = 0.0183
@@ -1427,6 +1429,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
+
 ##Propionate Production
 
 #Acryloyl-CoA Pathway (Metacyc: Pyruvate fermentation to propanoate II)
@@ -1578,6 +1581,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
+
 #fumarate reductase NADH
 #fum_c +nadh_c +h_c -> nad_c + succ_c
 
@@ -1651,6 +1655,8 @@ reaction.add_metabolites({mmcoa__R_c: -1.0,
 model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+
 
 ##Odd-chain reverse beta-oxidation
 
@@ -2199,7 +2205,7 @@ model.add_reactions([reaction])
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 ###Homoacetogensis
-"""
+
 #for_c + nad_c <-> co2_c + nadh_c
 
 reaction = Reaction('FDH')
@@ -2359,7 +2365,7 @@ reaction.add_metabolites({co_c: -1.0,
 model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
-"""
+
 
 ###Energy Generation
 
@@ -2621,6 +2627,29 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
+#ac_c + atp_c + coa_c -> accoa_c + amp_c + ppi_c
+
+ppi_c = Metabolite('ppi_c', formula='HO7P2', name='Diphosphate', compartment='c', charge=-3)
+
+reaction = Reaction('ACS')
+reaction.name = 'Acetyl-CoA synthetase'
+reaction.subsystem = 'Acetate metabolism'
+reaction.lower_bound = 0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({ac_c: -1.0,
+                          atp_c: -1.0,
+                          coa_c: -1.0,
+                          accoa_c: 1.0,
+                          amp_c: 1.0,
+                          ppi_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#Gluconeogenic TCA
+
 reaction = Reaction('ACITL')
 reaction.name = 'ATP Citrate Lyase'
 reaction.subsystem = 'TCA Cycle'
@@ -2657,6 +2686,9 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
+
+#Glyoxylate Cycle
+
 #icit_c -> glx_c + succ_c
 
 glx_c = Metabolite('glx_c', formula='C2HO3', name='Glyxoxylate', compartment='c', charge=-1)
@@ -2689,27 +2721,6 @@ reaction.add_metabolites({accoa_c: -1.0,
                           coa_c: 1.0,
                           h_c: 1.0,
                           mal__L_c: 1.0})
-
-model.add_reactions([reaction])
-
-print(reaction.name + ": " + str(reaction.check_mass_balance()))
-
-#ac_c + atp_c + coa_c -> accoa_c + amp_c + ppi_c
-
-ppi_c = Metabolite('ppi_c', formula='HO7P2', name='Diphosphate', compartment='c', charge=-3)
-
-reaction = Reaction('ACS')
-reaction.name = 'Acetyl-CoA synthetase'
-reaction.subsystem = 'Acetate metabolism'
-reaction.lower_bound = 0.  # This is the default
-reaction.upper_bound = 1000.  # This is the default
-
-reaction.add_metabolites({ac_c: -1.0,
-                          atp_c: -1.0,
-                          coa_c: -1.0,
-                          accoa_c: 1.0,
-                          amp_c: 1.0,
-                          ppi_c: 1.0})
 
 model.add_reactions([reaction])
 
@@ -3301,6 +3312,63 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
+#Succinate exchange
+#succ_e <->
+succ_e = Metabolite('succ_e', formula='C4H4O4', name='Succinate', compartment='e', charge=-2)
+reaction = Reaction('EX_succ_e')
+reaction.name = 'Succinate exchange'
+reaction.subsystem = 'Exchange'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({succ_e: -1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+
+#Succinate transport
+
+reaction = Reaction('succt')
+reaction.name = 'Succinate transport'
+reaction.subsystem = 'Transport'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({succ_e: -1.0,
+                          succ_c: 1.0})
+
+model.add_reactions([reaction])
+
+reaction = Reaction('Succinate_import')
+reaction.name = 'Succinate import'
+reaction.subsystem = 'Transport'
+reaction.lower_bound = 0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({succ_e: -1.0,
+                          h_e: -1.0,
+                          succ_c: 1.0,
+                          h_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+reaction = Reaction('Succinate_export')
+reaction.name = 'Succinate export'
+reaction.subsystem = 'Transport'
+reaction.lower_bound = 0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({succ_c: -1.0,
+                          h_c: -1.0,
+                          succ_e: 1.0,
+                          h_e: 1.0})
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
 #Proton transport
 
 reaction = Reaction('H_import')
@@ -3520,6 +3588,25 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
+#Succinate_Transport_ATP
+eaction = Reaction('Succinate_Transport_ATP')
+reaction.name = 'Succinate Transport ATP'
+reaction.subsystem = 'ATP Hydrolysis'
+reaction.lower_bound = 0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({atp_c: -1.0,
+                          h2o_c: -1.0,
+                          adp_c: 1.0,
+                          pi_c: 1.0,
+                          h_c: 1.0,
+                          ATP_TRANS: -1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+
 #Proton_Transport_ATP
 reaction = Reaction('Proton_Transport_ATP')
 reaction.name = 'Proton Transport ATP'
@@ -3703,10 +3790,10 @@ print (model.medium)
 medium = model.medium
 
 #Medium for reactor simulations
-medium["EX_xyl__D_e"] = 0.05 #0.1317 #mmol/hr/gDW
+medium["EX_xyl__D_e"] = 0 #0.1317 #mmol/hr/gDW
 medium["EX_xyl4_e"] = 0 #0.0081 #mmol/hr/gDW
 medium["EX_glc4_e"] = 0 #0.0081 #mmol/hr/gDW
-medium["EX_glc__D_e"] = 0 #0.0125 #mmol/hr/gDW
+medium["EX_glc__D_e"] = 1 #0.0125 #mmol/hr/gDW
 medium["EX_glyc_e"] = 0 #0.0360 #mmol/hr/gDW
 medium["EX_lac__D_e"] = 0 #0.0005 #mmol/hr/gDW
 medium["EX_etoh_e"] = 0
@@ -3720,7 +3807,7 @@ medium["EX_pta_e"] = 0
 medium["EX_hpta_e"] = 0
 medium["EX_co2_e"] = 0
 medium["EX_for_e"] = 0
-
+medium["EX_succ_e"] = 0
 
 model.medium = medium
 print (model.medium)
@@ -3734,14 +3821,14 @@ print (model.medium)
 #model.reactions.EX_octa_e.knock_out()
 #model.reactions.EX_hxa_e.knock_out()
 #model.reactions.EX_but_e.knock_out()
-#model.reactions.EX_ac_e.knock_out()
+model.reactions.EX_ac_e.knock_out()
 #model.reactions.EX_lac__D_e.knock_out()
 #model.reactions.EX_h2_e.knock_out()
 #model.reactions.EX_etoh_e.knock_out()
 #model.reactions.EX_for_e.knock_out()
 #model.reactions.EX_ppa_e.knock_out()
-#model.reactions.EX_pta_e.knock_out()
-#model.reactions.EX_hpta_e.knock_out()
+model.reactions.EX_pta_e.knock_out()
+model.reactions.EX_hpta_e.knock_out()
 
 #To allow acetate uptake only
 #model.reactions.EX_ac_e.upper_bound = 0
@@ -3749,7 +3836,7 @@ print (model.medium)
 #model.reactions.ACKr.lower_bound = 0
 
 #Turn off alcohol dehydrogenase (ethanol production)
-#model.reactions.ALCD2x.knock_out()
+model.reactions.ALCD2x.knock_out()
 
 #Turn off electron bifurcating acyl-CoA dehydrogenase
 #model.reactions.EBACD1.knock_out()
@@ -3774,7 +3861,7 @@ model.reactions.VCOAD2.knock_out()
 #model.reactions.CoATC7.knock_out()
 
 #Turn off Reverse beta oxidation in second step (HACD) Only need to restrict first one
-#model.reactions.HACD1.knock_out()
+model.reactions.HACD1.knock_out()
 #model.reactions.HACD2.knock_out()
 #model.reactions.HACD3.knock_out()
 #model.reactions.HVCD.knock_out()
@@ -3813,11 +3900,11 @@ model.reactions.HYDABC.knock_out()
 #model.reactions.MCC.knock_out()
 
 #Turn off homoacetogensis
-#model.reactions.MCC.knock_out()
+model.reactions.MCC.knock_out()
 
 #Turn off homoacetogensis
-#model.reactions.CODH4.knock_out()
-#model.reactions.FDH.knock_out()
+model.reactions.CODH4.knock_out()
+model.reactions.FDH.knock_out()
 
 #This is where we set the objective function
 model.objective = 'EX_BIOMASS'
@@ -3828,6 +3915,7 @@ model.objective = 'EX_BIOMASS'
 #model.objective = 'EX_pta_e'
 #model.objective = 'EX_hpta_e'
 #model.objective = 'EX_ac_e'
+#model.objective = 'EX_succ_e'
 
 """model.reactions.EX_octa_e.upper_bound = 0.0034
 model.reactions.EX_octa_e.lower_bound = 0.0034
@@ -3900,6 +3988,7 @@ C8 = pfba_solution["EX_octa_e"]
 C3 = pfba_solution["EX_ppa_e"]
 C5 = pfba_solution["EX_pta_e"]
 C7 = pfba_solution["EX_hpta_e"]
+SUCC = pfba_solution["EX_succ_e"]
 
 G_XYL = pfba_solution["EX_xyl__D_e"]*-753.37
 G_GLC = pfba_solution["EX_glc__D_e"]*-913.28
@@ -3920,8 +4009,9 @@ G_C8 = pfba_solution["EX_octa_e"]*-322.29
 G_C3 = pfba_solution["EX_ppa_e"]*-356.18
 G_C5 = pfba_solution["EX_pta_e"]*-342.6
 G_C7 = pfba_solution["EX_hpta_e"]*-329.2
+G_SUCC = pfba_solution["EX_succ_e"]*-690.23
 
-dG0 = G_XYL + G_GLC + G_XYL4 + G_GLC4 + G_GLYC + G_LAC + G_ETOH + G_H2 + G_H2O + G_CO2 + G_H + G_C1 + G_C2 + G_C4 + G_C6 + G_C8 + G_C3 + G_C5 + G_C7
+dG0 = G_XYL + G_GLC + G_XYL4 + G_GLC4 + G_GLYC + G_LAC + G_ETOH + G_H2 + G_H2O + G_CO2 + G_H + G_C1 + G_C2 + G_C4 + G_C6 + G_C8 + G_C3 + G_C5 + G_C7 + G_SUCC
 
 print ("dG0: ", dG0)
 
@@ -3973,6 +4063,7 @@ print ("C5: ",C5)
 print ("C6: ",C6)
 print ("C7: ",C7)
 print ("C8: ",C8)
+print("SUCC: ",SUCC)
 print ("ATP: ",pfba_solution["ATP_Hydrolysis"])
 
 #if G_Per_ATP > -50:
@@ -4002,7 +4093,7 @@ print (type(model.solver))
 #####################################
 
 #Print the steady state xylose and biomass fluxes
-print ("XYL: ",XYL)
+#print ("XYL: ",XYL)
 BIOM = pfba_solution["EX_BIOMASS"]
 print ("BIOMASS: ",BIOM)
 
@@ -4010,14 +4101,12 @@ print ("BIOMASS: ",BIOM)
 ###AMMENDMENT I: ESSENTIAL PROTEINS##
 #####################################
 
-n = 0
-for reaction in model.reactions:
-    ub = model.reactions[n].upper_bound
-    lb = model.reactions[n].lower_bound
-    model.reactions[n].knock_out()
-    #print(model.reactions[n], cobra.flux_analysis.pfba(model).fluxes['ATP_Hydrolysis'])
-    model.reactions[n].upper_bound = ub
-    model.reactions[n].lower_bound = lb
-    n = n + 1
-
-
+#n = 0
+#for reaction in model.reactions:
+#    ub = model.reactions[n].upper_bound
+#    lb = model.reactions[n].lower_bound
+#    model.reactions[n].knock_out()
+#    #print(model.reactions[n], cobra.flux_analysis.pfba(model).fluxes['ATP_Hydrolysis'])
+#    model.reactions[n].upper_bound = ub
+#    model.reactions[n].lower_bound = lb
+#    n = n + 1
