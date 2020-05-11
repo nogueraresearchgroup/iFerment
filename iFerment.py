@@ -1,11 +1,4 @@
-# iFerment182
-
-# Date: May 06, 2020
-#This is iChainElongate-drnv3.py
-# (a merger of iFerment182 received from Matt
-# and Dan Noguera's edits to the iFerment181 received from Abel)
-# with additional code to include the ability to produce extracellular succinate
-
+# iFerment
 
 from __future__ import print_function
 from cobra import Model, Reaction, Metabolite
@@ -19,7 +12,7 @@ import math
 ###Part I: REACTOR PARAMETERS###
 ################################
 
-model = Model("iFerment182")
+model = Model("iFerment")
 
 # Set reactor conditions
 T = 35  # deg C
@@ -3464,6 +3457,8 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
+# R0169 Ethanol export etoh_c -> etoh_e
+
 reaction = Reaction('Ethanol_export')
 reaction.name = 'Ethanol export'
 reaction.subsystem = 'Transport'
@@ -3478,6 +3473,7 @@ model.add_reactions([reaction])
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 # Succinate exchange
+
 # succ_e <->
 succ_e = Metabolite('succ_e', formula='C4H4O4',
                     name='Succinate', compartment='e', charge=-2)
