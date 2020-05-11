@@ -3472,7 +3472,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# Succinate exchange
+# R0170 Succinate exchange
 
 # succ_e <->
 succ_e = Metabolite('succ_e', formula='C4H4O4',
