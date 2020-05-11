@@ -1,6 +1,6 @@
-# iChainElongateSugars
+# iFerment
 
-**iChainElongateSugars** is a single-cell metabolic model for a general bacterium capable of sugar chain-elongation. It is an amended version of Matthew Scarborough’s unpublished iFerment181 model, which includes biomass growth, for which all vestiges remain, but may be disabled via commenting out the code.
+*iFerment** is a single-cell metabolic model encompassing all fermentation lifestyles. It is an amended version of Matthew Scarborough’s unpublished iFerment181 model, which includes biomass growth, for which all vestiges remain, but may be disabled via commenting out the code.
 
 ### Dependencies:
 
@@ -21,7 +21,7 @@
    ```
 4. Run the script from the terminal.
    ```bash
-   python3 iChainElongateSugars.py
+   python3 iFerment.py
    ```
 
 ## Model Organization
