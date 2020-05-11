@@ -3472,9 +3472,8 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# R0170 Succinate exchange
+# R0170 Succinate exchange succ_e <->
 
-# succ_e <->
 succ_e = Metabolite('succ_e', formula='C4H4O4',
                     name='Succinate', compartment='e', charge=-2)
 reaction = Reaction('EX_succ_e')
@@ -3490,7 +3489,7 @@ model.add_reactions([reaction])
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 
-# Succinate transport
+# R0171 Succinate transport succ_e <-> succ_c
 
 reaction = Reaction('succt')
 reaction.name = 'Succinate transport'
@@ -3502,6 +3501,8 @@ reaction.add_metabolites({succ_e: -1.0,
                           succ_c: 1.0})
 
 model.add_reactions([reaction])
+
+# R0172 Succinate import succ_e + h_e <-> succ_c + h_c
 
 reaction = Reaction('Succinate_import')
 reaction.name = 'Succinate import'
@@ -3518,6 +3519,8 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
+# R0173 Succinate export succ_c + h_c <-> succ_e + h_e
+
 reaction = Reaction('Succinate_export')
 reaction.name = 'Succinate export'
 reaction.subsystem = 'Transport'
@@ -3533,6 +3536,8 @@ print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 # Proton transport
 
+# R0174 H+ import h_e <-> h_c
+
 reaction = Reaction('H_import')
 reaction.name = 'H+ import'
 reaction.subsystem = 'Transport'
@@ -3545,6 +3550,8 @@ reaction.add_metabolites({h_e: -1.0,
 model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+# R0175 H+ export h_c <-> h_e
 
 reaction = Reaction('H_export')
 reaction.name = 'H+ export'
@@ -3561,7 +3568,8 @@ print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 # ATP for Transport
 
-# Formate_Transport_ATP
+# R0176 Formate Transport ATP atp_c + h2o_c -> adp_c + pi_c + h_c
+
 reaction = Reaction('Formate_Transport_ATP')
 reaction.name = 'Formate Transport ATP'
 reaction.subsystem = 'ATP Hydrolysis'
@@ -3579,7 +3587,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# Acetate_Transport_ATP
+# R0177 Acetate Transport ATP Hydrolysis atp_c + h2o_c -> adp_c + pi_c + h_c
 
 reaction = Reaction('Acetate_Transport_ATP')
 reaction.name = 'Acetate Transport ATP Hydrolysis'
@@ -3598,7 +3606,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# Propionate_Transport_ATP
+# R0178 Propionate Transport ATP Hydrolysis atp_c + h2o_c -> adp_c + pi_c + h_c
 
 reaction = Reaction('Propionate_Transport_ATP')
 reaction.name = 'Propionate Transport ATP Hydrolysis'
@@ -3617,7 +3625,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# Butyrate_Transport_ATP
+# R0179 Butyrate Transport ATP Hydrolysis atp_c + h2o_c -> adp_c + pi_c + h_c
 
 reaction = Reaction('Butyrate_Transport_ATP')
 reaction.name = 'Butyrate Transport ATP Hydrolysis'
@@ -3636,7 +3644,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# Valerate_Transport_ATP
+# R0180 Valerate Transport ATP Hydrolysis atp_c + h2o_c -> adp_c + pi_c + h_c
 
 reaction = Reaction('Valerate_Transport_ATP')
 reaction.name = 'Valerate Transport ATP Hydrolysis'
@@ -3655,7 +3663,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# Hexanoate_Transport_ATP
+# R0181 Hexanoate Transport ATP Hydrolysis atp_c + h2o_c -> adp_c + pi_c + h_c
 
 reaction = Reaction('Hexanoate_Transport_ATP')
 reaction.name = 'Hexanoate Transport ATP Hydrolysis'
@@ -3674,7 +3682,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# Heptanoate_Transport_ATP
+# R0182 Heptanoate Transport ATP Hydrolysis atp_c + h2o_c -> adp_c + pi_c + h_c
 
 reaction = Reaction('Heptanoate_Transport_ATP')
 reaction.name = 'Heptanoate Transport ATP Hydrolysis'
@@ -3693,7 +3701,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# Octanoate_Transport_ATP
+# R0183 Octanoate Transport ATP Hydrolysis atp_c + h2o_c -> adp_c + pi_c + h_c
 
 reaction = Reaction('Octanoate_Transport_ATP')
 reaction.name = 'Octanoate Transport ATP Hydrolysis'
@@ -3712,7 +3720,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# Lactate_Transport_ATP
+# R0184 Lactate Transport ATP Hydrolysis atp_c + h2o_c -> adp_c + pi_c + h_c
 
 reaction = Reaction('Lactate_Transport_ATP')
 reaction.name = 'Lactate Transport ATP'
@@ -3731,7 +3739,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# Ethanol_Transport_ATP
+# R0185 Ethanol Transport ATP Hydrolysis atp_c + h2o_c -> adp_c + pi_c + h_c
 
 reaction = Reaction('Ethanol_Transport_ATP')
 reaction.name = 'Ethanol Transport ATP Hydrolysis'
@@ -3750,7 +3758,8 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# Succinate_Transport_ATP
+# R0186 Succinate Transport ATP atp_c + h2o_c -> adp_c + pi_c + h_c
+
 eaction = Reaction('Succinate_Transport_ATP')
 reaction.name = 'Succinate Transport ATP'
 reaction.subsystem = 'ATP Hydrolysis'
@@ -3768,8 +3777,8 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
+# R0187 Proton Transport ATP atp_c + h2o_c -> adp_c + pi_c + h_c
 
-# Proton_Transport_ATP
 reaction = Reaction('Proton_Transport_ATP')
 reaction.name = 'Proton Transport ATP'
 reaction.subsystem = 'ATP Hydrolysis'
@@ -3905,6 +3914,8 @@ if TransEnergetics == True:
 
 # ATP Accounting
 
+# R0188 ATP produced via substrate-level phosphorylation ATP_SLP <->
+
 reaction = Reaction('ATP_SLP')
 reaction.name = 'ATP produced via substrate-level phosphorylation'
 reaction.subsystem = 'Exchange'
@@ -3916,6 +3927,8 @@ reaction.add_metabolites({ATP_SLP: -1.0})
 model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+# R0189 ATP (excess) consumed via hydrolysis ATP_HYDR <->
 
 reaction = Reaction('ATP_HYDR')
 reaction.name = 'ATP (excess) consumed via hydrolysis'
@@ -3929,8 +3942,10 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
+# R0190 ATP produced via ion motive force ATP_IMF <->
+
 reaction = Reaction('ATP_IMF')
-reaction.name = 'ATP produced via ion motive force '
+reaction.name = 'ATP produced via ion motive force'
 reaction.subsystem = 'Exchange'
 reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
@@ -3940,6 +3955,8 @@ reaction.add_metabolites({ATP_IMF: -1.0})
 model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+# R0191 ATP consumed for transport ATP_TRANS <->
 
 reaction = Reaction('ATP_TRANS')
 reaction.name = 'ATP consumed for transport'
@@ -3952,6 +3969,8 @@ reaction.add_metabolites({ATP_TRANS: -1.0})
 model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+# R0192 ATP consumed via biomass equation ATP_BIOMASS <->
 
 reaction = Reaction('ATP_BIOMASS')
 reaction.name = 'ATP consumed via biomass equation'
