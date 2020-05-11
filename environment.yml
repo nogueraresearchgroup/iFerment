@@ -1,0 +1,10 @@
+name: iChainElongateSugars
+channels:
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.6
+  - numpy=1.18
+  - pandas=1
+  - cobra=0.4.0
+
