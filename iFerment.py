@@ -3984,6 +3984,943 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
+#All reactions below have been amended by Abel Ingle
+
+_3hb_e = Metabolite('_3hb_e', formula='C4H7O3', name='3-Hydroxybutyrate', compartment='e', charge= -1)
+
+#3-Hydroxybutyrate exchange
+#_3hb_e <->
+
+reaction = Reaction('EX__3hb_e')
+reaction.name = '3-Hydroxybutyrate exchange'
+reaction.subsystem = 'Exchange'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({_3hb_e: -1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#3-Hydroxybutyrate Transport 
+
+_3hb_c = Metabolite('_3hb_c', formula='C4H7O3', name='3-Hydroxybutyrate', compartment='c', charge= -1)
+#3-Hydroxybutyrate Permease
+reaction = Reaction('3-Hydroxybutyrate_export')
+reaction.name = '3-Hydroxybutyrate export'
+reaction.subsystem = 'Transport'
+reaction.lower_bound = 0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({_3hb_c: -1.0,
+                          h_c: -1.0,
+                          _3hb_e: 1.0,
+                          h_e: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#_3hbcoa_c + h2o_c <-> _3hb_c + coa_c + h_c
+
+reaction = Reaction('HACT')
+#BiGG does not have this specific thioesterase reaction
+
+reaction.name = '*Hydroxy-Acyl-CoA Thioesterase'
+reaction.subsystem = 'Reverse Beta Oxidation'
+reaction.lower_bound = 0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({_3hbcoa_c: -1.0,
+                          h2o_c: -1.0,
+                          _3hb_c: 1.0,
+                          coa_c: 1.0,
+                          h_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#atp_c + coa_c + succ_c -> adp_c + pi_c + succoa_c
+
+reaction = Reaction('SUCOASc')
+#BiGG does not have Succinate CoA ligase ADP forming reaction for a cytoplasmic compartment, but for mitochondrial compartment
+reaction.name ='Succinate Coa ligase ADP forming'
+reaction.subsystem = 'TCA Cycle'
+reaction.lower_bound = -1000
+reaction.upper_bound = 1000
+
+reaction.add_metabolites({atp_c: -1.0,
+                          coa_c: -1.0,
+                          succ_c: -1.0,
+                          adp_c: 1.0,
+                          pi_c: 1.0,
+                          succoa_c: 1.0,
+                          ATP_SLP: -1.0})
+
+model.add_reactions([reaction])
+
+fadh2_c = Metabolite('fadh2_c', formula='C27H33N9O15P2', name='Flavin adenine dinucleotide reduced', compartment='c', charge=-2)
+fad_c = Metabolite('fad_c', formula='C27H31N9O15P2', name='Flavin adenine dinucleotide oxidized', compartment='c', charge=-2)
+
+#fad_c + succ_c -> fadh2_c + fum_c
+
+reaction = Reaction('SUCD1')
+reaction.name = 'Succinate dehydrogenase'
+reaction.subsystem = 'TCA Cycle'
+reaction.lower_bound = -1000
+reaction.upper_bound = 1000  
+
+reaction.add_metabolites({fad_c: -1.0,
+                          succ_c: -1.0,
+                          fadh2_c: 1.0,
+                          fum_c: 1.0})
+                          
+model.add_reactions([reaction])
+
+#akg_c + nad_c + coa_c -> succoa_c + nadh_c + co2_c
+
+reaction = Reaction('AKGDc')
+#BiGG does not have this reaction for cytoplasmic compartment
+reaction.name = '2-Oxoglutarate dehydrogenase'
+reaction.subsystem = 'TCA Cycle'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({akg_c: -1.0,
+                          nad_c: -1.0,
+                          coa_c: -1.0,
+                          succoa_c: 1.0,
+                          nadh_c: 1.0,
+                          co2_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#atp_c + oaa_c ⇌ adp_c + co2_c + pep_c
+
+reaction = Reaction('PPCKc')
+#BiGG does not have this reaction for cytoplasmic compartment
+reaction.name = 'Phosphoenolpyruvate carboxykinase (ATP)'
+reaction.subsystem = 'TCA Cycle'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({atp_c: -1.0,
+                          oaa_c: -1.0,
+                          adp_c: 1.0,
+                          co2_c: 1.0,
+                          pep_c: 1.0,
+                          ATP_SLP: -1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#h_c + oaa_c ⇌ co2_c + pyr_c
+
+reaction = Reaction('OADDC')
+
+reaction.name = 'Oxaloacetate decarboxylase'
+reaction.subsystem = 'TCA Cycle'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({h_c: -1.0,
+                          oaa_c: -1.0,
+                          co2_c: 1.0,
+                          pyr_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#akg_c + coa_c + 2.0 fdox_c ⇌ co2_c + h_c + succoa_c + 2.0 fdred_c
+
+reaction = Reaction('OORr')
+#BiGG has a different reaction name for this reaction
+reaction.name = '2-oxoglutarate ferredoxin oxidoreductase'
+reaction.subsystem = 'TCA Cycle'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({akg_c: -1.0,
+                          coa_c: -1.0,
+                          fdox_c: -2.0,
+                          co2_c: 1.0,
+                          h_c: 1.0,
+                          succoa_c: 1.0,
+                          fdred_c: 2.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#4hbutcoa_c <-> h2o_c + b2coa_c
+
+_4hbutcoa_c = Metabolite('_4hbutcoa_c', formula='C25H38N7O18P3S', name='4-Hydroxybutanoyl-CoA', compartment='c', charge=-4)
+#BiGG does not have a crotonyl-coa consuming/producing 4-hydroxybutanoyl-CoA dehydratase
+reaction = Reaction('4HBCOADH')
+reaction.name = '4-hydroxybutanoyl-CoA dehydratase'
+reaction.subsystem = 'Reverse Beta Oxidation'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({_4hbutcoa_c: -1.0,
+                          b2coa_c: 1.0,
+                          h2o_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#_4hbutcoa_c <-> _4hub_c + coa_c
+
+ghb_c = Metabolite('ghb_c', formula='C4H8O3', name='Gamma-hydroxybutyrate', compartment='c', charge=0)
+#BiGG logs this metabolite in its unprotonated form 
+reaction = Reaction('GHBCOAT')
+#BiGG does not have this reaction
+reaction.name = '4-hydroxybutyrate coenzyme a transferase'
+reaction.subsystem = 'Reverse Beta Oxidation'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({_4hbutcoa_c: -1.0,
+                          ghb_c: 1.0,
+                          coa_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#ghb_c + nad_c <-> sucsal_c + nadh_c + h_c
+
+sucsal_c = Metabolite('sucsal_c', formula='C4H5O3', name='Succinate semialdehyde', compartment='c', charge=-1)
+
+reaction = Reaction('GHBDHx')
+
+reaction.name = 'Gamma-hydroxybutyrate dehydrogenase (NADH)'
+reaction.subsystem = 'TCA Cycle'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({ghb_c: -1.0,
+                          nad_c: -1.0,
+                          sucsal_c: 1.0,
+                          nadh_c: 1.0,
+                          h_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+
+#h2o_c + nad_c + sucsal_c <-> 2.0 h_c + nadh_c + succ_c
+
+reaction = Reaction('SSALx')
+
+reaction.name = 'Succinate-semialdehyde dehydrogenase (NAD)'
+reaction.subsystem = 'TCA Cycle'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({h2o_c: -1.0,
+                          nad_c: -1.0,
+                          sucsal_c: -1.0,
+                          nadh_c: 1.0,
+                          succ_c: 1.0,
+                          h_c: 2.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+dha_c = Metabolite('dha_c', formula='C3H6O3', name='Dihydroxyacetone', compartment='c', charge=0)
+
+#dha_c + pep_c <-> dhap_c + pyr_c
+
+reaction = Reaction('DHAPT')
+
+reaction.name = 'Dihydroxyacetone phosphotransferase'
+reaction.subsystem = 'Lower Glycolysis'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({dha_c: -1.0,
+                          pep_c: -1.0,
+                          dhap_c: 1.0,
+                          pyr_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#atp_c + dha_c <-> adp_c + dhap_c + h_c
+
+reaction = Reaction('DHAK')
+
+reaction.name = 'Dihydroxyacetone kinase'
+reaction.subsystem = 'Lower Glycolysis'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({atp_c: -1.0,
+                          dha_c: -1.0,
+                          adp_c: 1.0,
+                          dhap_c: 1.0,
+                          h_c: 1.0,
+                          ATP_SLP: -1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#acald_c + h2o_c + nad_c <-> ac_c + 2.0 h_c + nadh_c
+
+reaction = Reaction('ALDD2x')
+
+reaction.name = 'Aldehyde dehydrogenase (acetaldehyde, NAD)'
+reaction.subsystem = 'Lower Glycolysis'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({acald_c: -1.0,
+                          h2o_c: -1.0,
+                          nad_c: -1.0,
+                          ac_c: 1.0,
+                          h_c: 2.0,
+                          nadh_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+
+#atp_c + hco3_c + pyr_c <-> adp_c + h_c + oaa_c + pi_c
+
+hco3_c = Metabolite('hco3_c', formula='CHO3', name='Bicarbonate', compartment='c', charge=-1)
+
+reaction = Reaction('PC')
+
+reaction.name = 'Pyruvate carboxylase'
+reaction.subsystem = 'Lower Glycolysis'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({atp_c: -1.0,
+                          hco3_c: -1.0,
+                          pyr_c: -1.0,
+                          adp_c: 1.0,
+                          h_c: 1.0,
+                          oaa_c: 1.0,
+                          pi_c: 1.0,
+                          ATP_SLP: -1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#pep_c + glc__D_e <-> g6p_c + pyr_c
+
+
+reaction = Reaction('GLCpts')
+
+reaction.name = 'D-glucose transport via PEP:Pyr PTS'
+reaction.subsystem = 'Lower Glycolysis'
+reaction.lower_bound = 0  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({pep_c: -1.0,
+                          glc__D_e: -1.0,
+                          g6p_c: 1.0,
+                          pyr_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#succoa_c + h2o_c <-> succ_c + coa_c + h_c
+
+reaction = Reaction('SCH')
+
+reaction.name = 'Succinyl-CoA hydrolase'
+reaction.subsystem = 'Propionate Production'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({succoa_c: -1.0,
+                          h2o_c: -1.0,
+                          succ_c: 1.0,
+                          coa_c: 1.0,
+                          h_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#dhap_c <-> mthgxl_c + pi_c
+
+mthgxl_c = Metabolite('mthgxl_c', formula='C3H4O2', name='Methylglyoxal', compartment='c', charge=0)
+
+reaction = Reaction('MGSA')
+
+reaction.name = 'Methylglyoxal synthase'
+reaction.subsystem = 'Propionate Production'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({dhap_c: -1.0,
+                          mthgxl_c: 1.0,
+                          pi_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#lald__L_c + nad_c <-> h_c + mthgxl_c + nadh_c
+
+lald__L_c = Metabolite('lald__L_c', formula='C3H6O2', name='L-Lactaldehyde', compartment='c', charge=0)
+
+reaction = Reaction('ALCD22_L')
+
+reaction.name = 'Alcohol dehydrogenase (L-lactaldehyde)'
+reaction.subsystem = 'Propionate Production'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({lald__L_c: -1.0,
+                          nad_c: -1.0,
+                          h_c: 1.0,
+                          mthgxl_c: 1.0,
+                          nadh_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#accoa_c + atp_c + hco3_c <-> adp_c + h_c + malcoa_c + pi_c
+
+malcoa_c = Metabolite('malcoa_c', formula='C24H38N7O19P3S', name='Malonyl-CoA', compartment='c', charge=0)
+#BiGG has a different formula for malonyl-coa
+reaction = Reaction('ACCOAC')
+#This reaction differs from BiGG database because 4 h_c are being consumed so that the reaction is balanced
+reaction.name = 'Acetyl-CoA carboxylase'
+reaction.subsystem = 'Propionate Production'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({accoa_c: -1.0,
+                          atp_c: -1.0,
+                          hco3_c: -1.0,
+                          h_c: -4.0,
+                          adp_c: 1.0,
+                          malcoa_c: 1.0,
+                          pi_c: 1.0,
+                          ATP_SLP: -1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#atp_c + hco3_c + ppcoa_c <-> adp_c + h_c + mmcoa__S_c + pi_c
+
+reaction = Reaction('PPCOAC')
+
+reaction.name = 'Propionyl-CoA carboxylase'
+reaction.subsystem = 'Propionate Production'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({atp_c: -1.0,
+                          hco3_c: -1.0,
+                          ppcoa_c: -1.0,
+                          adp_c: 1.0,
+                          h_c: 1.0,
+                          mmcoa__S_c: 1.0,
+                          pi_c: 1.0,
+                          ATP_SLP: -1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#h2o_c + lald__L_c + nad_c <-> 2.0 h_c + lac__L_c + nadh_c
+
+lac__L_c = Metabolite('lac__L_c', formula='C3H5O3', name='L-Lactate', compartment='c', charge=-1)
+
+reaction = Reaction('LCADi')
+
+reaction.name = 'Lactaldehyde dehydrogenase'
+reaction.subsystem = 'Pyruvate Metabolism'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({h2o_c: -1.0,
+                          lald__L_c: -1.0,
+                          nad_c: -1.0,
+                          h_c: 2.0,
+                          lac__L_c: 1.0,
+                          nadh_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#lac__L_c <-> lac__D_c
+
+reaction = Reaction('LacR')
+
+reaction.name = 'Lactate racemase'
+reaction.subsystem = 'Pyruvate Metabolism'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({lac__D_c: -1.0,
+                          lac__L_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#ac_c + succoa_c <-> accoa_c + succ_c
+
+reaction = Reaction('SUCOAACTr')
+
+reaction.name = 'Succinyl-CoA:acetate CoA transferase'
+reaction.subsystem = 'TCA Cycle'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({ac_c: -1.0,
+                          succoa_c: -1.0,
+                          accoa_c: 1.0,
+                          succ_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#h2o_c + nadp_c + sucsal_c <-> 2.0 h_c + nadph_c + succ_c
+
+reaction = Reaction('SSALy')
+
+reaction.name = 'Succinate-semialdehyde dehydrogenase (NADP)'
+reaction.subsystem = 'TCA Cycle'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({h2o_c: -1.0,
+                          nadp_c: -1.0,
+                          sucsal_c: -1.0,
+                          h_c: 2.0,
+                          nadph_c: 1.0,
+                          succ_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#pep_c + dha_c <-> pyr_c + dhap_c
+
+reaction = Reaction('PPGPT')
+#This reaction is not in BiGG
+reaction.name = 'Phosphoenolpyruvate:glycerone phosphotransferase'
+reaction.subsystem = 'Pyruvate Metabolism'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({pep_c: -1.0,
+                          dha_c: -1.0,
+                          pyr_c: 1.0,
+                          dhap_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#coa_c + pyr_c + 2.0 fdxo_2_2_c <-> accoa_c + co2_c + h_c + 2.0 fdxrd_c
+
+reaction = Reaction('POR_syn')
+#The BiGG reaction uses a different ferredoxin
+reaction.name = 'Pyruvate-ferredoxin oxidoreductase'
+reaction.subsystem = 'Pyruvate Metabolism'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({coa_c: -1.0,
+                          pyr_c: -1.0,
+                          fdox_c: -2.0,
+                          accoa_c: 1.0,
+                          co2_c: 1.0,
+                          h_c: 1.0,
+                          fdred_c: 2.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#lald__L_c + nadp_c <-> h_c + mthgxl_c + nadph_c
+
+reaction = Reaction('MRN')
+#BiGG does not have this reaction
+reaction.name = 'Methylglyoxal reductase (NADP)'
+reaction.subsystem = 'Pyruvate Metabolism'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({lald__L_c: -1.0,
+                          nadp_c: -1.0,
+                          h_c: 1.0,
+                          mthgxl_c: 1.0,
+                          nadph_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#gthrd_c + mthgxl_c <-> lgt__S_c
+
+gthrd_c = Metabolite('gthrd_c', formula='C10H16N3O6S', name='Reduced glutathione', compartment='c', charge=-1)
+
+lgt__S_c = Metabolite('lgt__S_c', formula='C13H20N3O8S', name='(R)-S-Lactoylglutathione', compartment='c', charge=-1)
+
+reaction = Reaction('LGTHL')
+
+reaction.name = 'Lactoylglutathione lyase'
+reaction.subsystem = 'Pyruvate Metabolism'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({gthrd_c: -1.0,
+                          mthgxl_c: -1.0,
+                          lgt__S_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#h2o_c + lgt__S_c ⇌ gthrd_c + h_c + lac__D_c
+
+reaction = Reaction('GLYOX')
+
+reaction.name = 'Hydroxyacylglutathione hydrolase'
+reaction.subsystem = 'Pyruvate Metabolism'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({h2o_c: -1.0,
+                          lgt__S_c: -1.0,
+                          gthrd_c: 1.0,
+                          h_c: 1.0,
+                          lac__D_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#acac_c + succoa_c ⇌ aacoa_c + succ_c
+
+acac_c = Metabolite('acac_c', formula='C4H5O3', name='Acetoacetate', compartment='c', charge=-1)
+
+reaction = Reaction('OCOAT1')
+
+reaction.name = '3-oxoacid CoA-transferase (Succinyl-CoA: acetoacetate)'
+reaction.subsystem = 'TCA Cycle'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({acac_c: -1.0,
+                          succoa_c: -1.0,
+                          aacoa_c: 1.0,
+                          succ_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#g6p_c <-> g6p_B_c
+
+g6p_B_c = Metabolite('g6p_B_c', formula='C6H11O9P', name='Beta D glucose 6 phosphate', compartment='c', charge=-2)
+
+reaction = Reaction('G6PI')
+
+reaction.name = 'Glucose 6 phosphate isomerase'
+reaction.subsystem = 'Pentose Phosphate Pathway'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({g6p_c: -1.0,
+                          g6p_B_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#g6p_c + nadp_c <-> 6pgl_c + h_c + nadph_c
+
+_6pgl_c = Metabolite('_6pgl_c', formula='C6H9O9P', name='6-phospho-D-glucono-1,5-lactone', compartment='c', charge=-2)
+
+reaction = Reaction('G6PDH2r')
+#BiGG does not use beta-glucose-6-phosphate in this reaction
+reaction.name = 'Glucose 6-phosphate dehydrogenase'
+reaction.subsystem = 'Pentose Phosphate Pathway'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({g6p_B_c: -1.0,
+                          nadp_c: -1.0,
+                          _6pgl_c: 1.0,
+                          h_c: 1.0,
+                          nadph_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#g6p_c + nadp_c <-> 6pgl_c + h_c + nadph_c
+
+_6pgc_c = Metabolite('_6pgc_c', formula='C6H10O10P', name='6-Phospho-D-gluconate', compartment='c', charge=-3)
+
+reaction = Reaction('PGL')
+#BiGG does not use beta-glucose-6-phosphate in this reaction
+reaction.name = '6-phosphogluconolactonase'
+reaction.subsystem = 'Pentose Phosphate Pathway'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({_6pgl_c: -1.0,
+                          h2o_c: -1.0,
+                          _6pgc_c: 1.0,
+                          h_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#_6pgc_c + nadp_c <-> co2_c + nadph_c + ru5p__D_c
+
+reaction = Reaction('GND')
+
+reaction.name = 'Phosphogluconate dehydrogenase'
+reaction.subsystem = 'Pentose Phosphate Pathway'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({_6pgc_c: -1.0,
+                          nadp_c: -1.0,
+                          co2_c: 1.0,
+                          ru5p__D_c: 1.0,
+                          nadph_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#_6pgc_c + nad_c <-> co2_c + nadh_c + ru5p__D_c
+
+reaction = Reaction('GND_nad')
+#BiGG does not have this reaction
+reaction.name = 'Phosphogluconate dehydrogenase (NAD)'
+reaction.subsystem = 'Pentose Phosphate Pathway'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({_6pgc_c: -1.0,
+                          nad_c: -1.0,
+                          co2_c: 1.0,
+                          ru5p__D_c: 1.0,
+                          nadh_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#atp_c + rib__D_c <-> adp_c + h_c + r5p_c
+
+rib__D_c = Metabolite('rib__D_c', formula='C5H10O5', name='D-Ribose', compartment='c', charge=0)
+
+reaction = Reaction('RBK')
+
+reaction.name = 'Ribokinase'
+reaction.subsystem = 'Pentose Phosphate Pathway'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({atp_c: -1.0,
+                          rib__D_c: -1.0,
+                          adp_c: 1.0,
+                          ru5p__D_c: 1.0,
+                          h_c: 1.0,
+                          ATP_SLP: -1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#2dr5p_c <-> acald_c + g3p_c
+
+_2dr5p_c = Metabolite('_2dr5p_c', formula='C5H9O7P', name='2-Deoxy-D-ribose 5-phosphate', compartment='c', charge=-2)
+
+reaction = Reaction('DRPA')
+
+reaction.name = 'Deoxyribose-phosphate aldolase'
+reaction.subsystem = 'Pentose Phosphate Pathway'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({_2dr5p_c: -1.0,
+                          acald_c: 1.0,
+                          g3p_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#2dr5p_c <-> acald_c + g3p_c
+
+drib_c = Metabolite('drib_c', formula='C5H10O4', name='Deoxyribose', compartment='c', charge=0)
+
+reaction = Reaction('DRBK')
+
+reaction.name = 'Deoxyribokinase'
+reaction.subsystem = 'Pentose Phosphate Pathway'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({atp_c: -1.0,
+                          drib_c: -1.0,
+                          _2dr5p_c: 1.0,
+                          adp_c: 1.0,
+                          h_c: 1.0,
+                          ATP_SLP: -1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#ah6p__D_c <-> f6p_c
+
+ah6p__D_c = Metabolite('ah6p__D_c', formula='C6H11O9P', name='Arabino-3-hexulose-6-P', compartment='c', charge=-2)
+#The charge of this metabolite differs from BiGG
+reaction = Reaction('AH6PI')
+
+reaction.name = 'Deoxyribokinase'
+reaction.subsystem = 'Pentose Phosphate Pathway'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({f6p_c: -1.0,
+                          ah6p__D_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#ah6p__D_c <-> ru5p__D_c + fald_c
+
+fald_c = Metabolite('fald_c', formula='CH2O', name='Formaldehyde', compartment='c', charge=0)
+
+reaction = Reaction('H6PS')
+#This reaction is not in BiGG
+reaction.name = '3-hexulose-6-phosphate synthase'
+reaction.subsystem = 'Pentose Phosphate Pathway'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({ah6p__D_c: -1.0,
+                          ru5p__D_c: 1.0,
+                          fald_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#fald_c + h2o_c + nad_c ⇌ for_c + 2.0 h_c + nadh_c
+
+reaction = Reaction('ALDD1')
+
+reaction.name = 'Aldehyde dehydrogenase formaldehyde NAD'
+reaction.subsystem = 'Pentose Phosphate Pathway'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({fald_c: -1.0,
+                          h2o_c: -1.0,
+                          nad_c: -1.0,
+                          for_c: 1.0,
+                          h_c: 2.0,
+                          nadh_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#r1p_c <-> r5p_c
+
+r1p_c = Metabolite('r1p_c', formula='C5H9O8P', name='Alpha-D-Ribose 1-phosphate', compartment='c', charge=-2)
+
+reaction = Reaction('PPM')
+
+reaction.name = 'Phosphopentomutase'
+reaction.subsystem = 'Pentose Phosphate Pathway'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({r1p_c: -1.0,
+                          r5p_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#h_c + pyr_c + lpam_c ⇌ co2_c + adhlam_c
+
+lpam_c = Metabolite('lpam_c', formula='C8H15NOS2', name='Lipoamide', compartment='c', charge=0)
+adhlam_c = Metabolite('adhlam_c', formula='C10H19NO2S2', name='S-Acetyldihydrolipoamide', compartment='c', charge=0)
+
+reaction = Reaction('PDHa')
+
+reaction.name = 'Pyruvate dehydrogenase (lipoamide)'
+reaction.subsystem = 'TCA Cycle'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({h_c: -1.0,
+                          pyr_c: -1.0,
+                          lpam_c: -1.0,
+                          co2_c: 1.0,
+                          adhlam_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+
+#coa_c + fmn_c + h_c + pyr_c ⇌ accoa_c + co2_c + fmnh2_c
+
+fmn_c = Metabolite('fmn_c', formula='C17H19N4O9P', name='FMN', compartment='c', charge=-3)
+fmnh2_c = Metabolite('fmnh2_c', formula='C17H21N4O9P', name='Reduced FMN', compartment='c', charge=-2)
+
+reaction = Reaction('PDH2')
+#This reaction is not balanced in BiGG
+reaction.name = 'PDH2'
+reaction.subsystem = 'TCA Cycle'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({coa_c: -1.0,
+                          fmn_c: -1.0,
+                          h_c: -2.0,
+                          pyr_c: -1.0,
+                          accoa_c: 1.0,
+                          co2_c: 1.0,
+                          fmnh2_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 # Summarize Model Reactions and Metabolites
 print("Reactions: " + str(len(model.reactions)))
