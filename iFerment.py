@@ -3988,8 +3988,7 @@ print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 _3hb_e = Metabolite('_3hb_e', formula='C4H7O3', name='3-Hydroxybutyrate', compartment='e', charge= -1)
 
-#3-Hydroxybutyrate exchange
-#_3hb_e <->
+# R0193 3-Hydroxybutyrate exchange _3hb_e <->
 
 reaction = Reaction('EX__3hb_e')
 reaction.name = '3-Hydroxybutyrate exchange'
@@ -4006,7 +4005,9 @@ print(reaction.name + ": " + str(reaction.check_mass_balance()))
 #3-Hydroxybutyrate Transport 
 
 _3hb_c = Metabolite('_3hb_c', formula='C4H7O3', name='3-Hydroxybutyrate', compartment='c', charge= -1)
-#3-Hydroxybutyrate Permease
+
+# R0194 3-Hydroxybutyrate Permease _3hb_c + h_c -> _3hb_e + h_e
+
 reaction = Reaction('3-Hydroxybutyrate_export')
 reaction.name = '3-Hydroxybutyrate export'
 reaction.subsystem = 'Transport'
@@ -4022,7 +4023,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#_3hbcoa_c + h2o_c <-> _3hb_c + coa_c + h_c
+# R0195 *Hydroxy-Acyl-CoA Thioesterase _3hbcoa_c + h2o_c <-> _3hb_c + coa_c + h_c
 
 reaction = Reaction('HACT')
 #BiGG does not have this specific thioesterase reaction
@@ -4042,7 +4043,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#atp_c + coa_c + succ_c -> adp_c + pi_c + succoa_c
+# R0196 Succinate Coa ligase ADP forming atp_c + coa_c + succ_c <-> adp_c + pi_c + succoa_c
 
 reaction = Reaction('SUCOASc')
 #BiGG does not have Succinate CoA ligase ADP forming reaction for a cytoplasmic compartment, but for mitochondrial compartment
@@ -4064,7 +4065,7 @@ model.add_reactions([reaction])
 fadh2_c = Metabolite('fadh2_c', formula='C27H33N9O15P2', name='Flavin adenine dinucleotide reduced', compartment='c', charge=-2)
 fad_c = Metabolite('fad_c', formula='C27H31N9O15P2', name='Flavin adenine dinucleotide oxidized', compartment='c', charge=-2)
 
-#fad_c + succ_c -> fadh2_c + fum_c
+# R0197 Succinate dehydrogenase fad_c + succ_c -> fadh2_c + fum_c
 
 reaction = Reaction('SUCD1')
 reaction.name = 'Succinate dehydrogenase'
@@ -4079,7 +4080,7 @@ reaction.add_metabolites({fad_c: -1.0,
                           
 model.add_reactions([reaction])
 
-#akg_c + nad_c + coa_c -> succoa_c + nadh_c + co2_c
+# R0198 2-Oxoglutarate dehydrogenase akg_c + nad_c + coa_c -> succoa_c + nadh_c + co2_c
 
 reaction = Reaction('AKGDc')
 #BiGG does not have this reaction for cytoplasmic compartment
@@ -4099,7 +4100,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#atp_c + oaa_c ⇌ adp_c + co2_c + pep_c
+# R0199 Phosphoenolpyruvate carboxykinase (ATP) atp_c + oaa_c <-> adp_c + co2_c + pep_c
 
 reaction = Reaction('PPCKc')
 #BiGG does not have this reaction for cytoplasmic compartment
@@ -4119,7 +4120,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#h_c + oaa_c ⇌ co2_c + pyr_c
+# R0200 Oxaloacetate decarboxylase h_c + oaa_c <-> co2_c + pyr_c
 
 reaction = Reaction('OADDC')
 
@@ -4137,7 +4138,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#akg_c + coa_c + 2.0 fdox_c ⇌ co2_c + h_c + succoa_c + 2.0 fdred_c
+# R0201 2-oxoglutarate ferredoxin oxidoreductase akg_c + coa_c + 2.0 fdox_c <-> co2_c + h_c + succoa_c + 2.0 fdred_c
 
 reaction = Reaction('OORr')
 #BiGG has a different reaction name for this reaction
@@ -4158,9 +4159,10 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#4hbutcoa_c <-> h2o_c + b2coa_c
+# R0202 4-hydroxybutanoyl-CoA dehydratase _4hbutcoa_c <-> h2o_c + b2coa_c
 
 _4hbutcoa_c = Metabolite('_4hbutcoa_c', formula='C25H38N7O18P3S', name='4-Hydroxybutanoyl-CoA', compartment='c', charge=-4)
+
 #BiGG does not have a crotonyl-coa consuming/producing 4-hydroxybutanoyl-CoA dehydratase
 reaction = Reaction('4HBCOADH')
 reaction.name = '4-hydroxybutanoyl-CoA dehydratase'
@@ -4176,7 +4178,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#_4hbutcoa_c <-> _4hub_c + coa_c
+# R0203 4-hydroxybutyrate coenzyme A transferase _4hbutcoa_c <-> ghb_c + coa_c
 
 ghb_c = Metabolite('ghb_c', formula='C4H8O3', name='Gamma-hydroxybutyrate', compartment='c', charge=0)
 #BiGG logs this metabolite in its unprotonated form 
@@ -4195,7 +4197,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#ghb_c + nad_c <-> sucsal_c + nadh_c + h_c
+# R0204 Gamma-hydroxybutyrate dehydrogenase (NADH) ghb_c + nad_c <-> sucsal_c + nadh_c + h_c
 
 sucsal_c = Metabolite('sucsal_c', formula='C4H5O3', name='Succinate semialdehyde', compartment='c', charge=-1)
 
@@ -4217,7 +4219,7 @@ model.add_reactions([reaction])
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 
-#h2o_c + nad_c + sucsal_c <-> 2.0 h_c + nadh_c + succ_c
+# R0205 Succinate-semialdehyde dehydrogenase (NAD) h2o_c + nad_c + sucsal_c <-> 2.0 h_c + nadh_c + succ_c
 
 reaction = Reaction('SSALx')
 
@@ -4239,7 +4241,7 @@ print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 dha_c = Metabolite('dha_c', formula='C3H6O3', name='Dihydroxyacetone', compartment='c', charge=0)
 
-#dha_c + pep_c <-> dhap_c + pyr_c
+# R0206 Dihydroxyacetone phosphotransferase dha_c + pep_c <-> dhap_c + pyr_c
 
 reaction = Reaction('DHAPT')
 
@@ -4257,7 +4259,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#atp_c + dha_c <-> adp_c + dhap_c + h_c
+# R0207 Dihydroxyacetone kinase atp_c + dha_c <-> adp_c + dhap_c + h_c
 
 reaction = Reaction('DHAK')
 
@@ -4277,7 +4279,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#acald_c + h2o_c + nad_c <-> ac_c + 2.0 h_c + nadh_c
+# R0208 Aldehyde dehydrogenase (acetaldehyde, NAD) acald_c + h2o_c + nad_c <-> ac_c + 2.0 h_c + nadh_c
 
 reaction = Reaction('ALDD2x')
 
@@ -4298,7 +4300,7 @@ model.add_reactions([reaction])
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 
-#atp_c + hco3_c + pyr_c <-> adp_c + h_c + oaa_c + pi_c
+# R0209 Pyruvate carboxylase atp_c + hco3_c + pyr_c <-> adp_c + h_c + oaa_c + pi_c
 
 hco3_c = Metabolite('hco3_c', formula='CHO3', name='Bicarbonate', compartment='c', charge=-1)
 
@@ -4322,7 +4324,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#pep_c + glc__D_e <-> g6p_c + pyr_c
+# R0210 D-glucose transport via PEP:Pyr PTS pep_c + glc__D_e <-> g6p_c + pyr_c
 
 
 reaction = Reaction('GLCpts')
@@ -4341,7 +4343,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#succoa_c + h2o_c <-> succ_c + coa_c + h_c
+# R0211 Succinyl-CoA hydrolase succoa_c + h2o_c <-> succ_c + coa_c + h_c
 
 reaction = Reaction('SCH')
 
@@ -4360,7 +4362,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#dhap_c <-> mthgxl_c + pi_c
+# R0212 Methylglyoxal synthase dhap_c <-> mthgxl_c + pi_c
 
 mthgxl_c = Metabolite('mthgxl_c', formula='C3H4O2', name='Methylglyoxal', compartment='c', charge=0)
 
@@ -4379,7 +4381,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#lald__L_c + nad_c <-> h_c + mthgxl_c + nadh_c
+# R0213 Alcohol dehydrogenase (L-lactaldehyde) lald__L_c + nad_c <-> h_c + mthgxl_c + nadh_c
 
 lald__L_c = Metabolite('lald__L_c', formula='C3H6O2', name='L-Lactaldehyde', compartment='c', charge=0)
 
@@ -4400,7 +4402,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#accoa_c + atp_c + hco3_c <-> adp_c + h_c + malcoa_c + pi_c
+# R0214 Acetyl-CoA carboxylase accoa_c + atp_c + hco3_c + 4.0 h_c <-> adp_c + malcoa_c + pi_c
 
 malcoa_c = Metabolite('malcoa_c', formula='C24H38N7O19P3S', name='Malonyl-CoA', compartment='c', charge=0)
 #BiGG has a different formula for malonyl-coa
@@ -4424,7 +4426,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#atp_c + hco3_c + ppcoa_c <-> adp_c + h_c + mmcoa__S_c + pi_c
+# R0215 Propionyl-CoA carboxylase atp_c + hco3_c + ppcoa_c <-> adp_c + h_c + mmcoa__S_c + pi_c
 
 reaction = Reaction('PPCOAC')
 
@@ -4446,7 +4448,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#h2o_c + lald__L_c + nad_c <-> 2.0 h_c + lac__L_c + nadh_c
+# R0216 Lactaldehyde dehydrogenase h2o_c + lald__L_c + nad_c <-> 2.0 h_c + lac__L_c + nadh_c
 
 lac__L_c = Metabolite('lac__L_c', formula='C3H5O3', name='L-Lactate', compartment='c', charge=-1)
 
@@ -4468,7 +4470,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#lac__L_c <-> lac__D_c
+# R0217 Lactate racemase lac__D_c <-> lac__L_c
 
 reaction = Reaction('LacR')
 
@@ -4484,7 +4486,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#ac_c + succoa_c <-> accoa_c + succ_c
+# R0218 Succinyl-CoA:acetate CoA transferase ac_c + succoa_c <-> accoa_c + succ_c
 
 reaction = Reaction('SUCOAACTr')
 
@@ -4502,7 +4504,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#h2o_c + nadp_c + sucsal_c <-> 2.0 h_c + nadph_c + succ_c
+# R0219 Succinate-semialdehyde dehydrogenase (NADP) h2o_c + nadp_c + sucsal_c <-> 2.0 h_c + nadph_c + succ_c
 
 reaction = Reaction('SSALy')
 
@@ -4522,7 +4524,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#pep_c + dha_c <-> pyr_c + dhap_c
+# R0220 Phosphoenolpyruvate:glycerone phosphotransferase pep_c + dha_c <-> pyr_c + dhap_c
 
 reaction = Reaction('PPGPT')
 #This reaction is not in BiGG
@@ -4540,7 +4542,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#coa_c + pyr_c + 2.0 fdxo_2_2_c <-> accoa_c + co2_c + h_c + 2.0 fdxrd_c
+# R0221 Pyruvate-ferredoxin oxidoreductase coa_c + pyr_c + 2.0 fdox_c <-> accoa_c + co2_c + h_c + 2.0 fdred_c
 
 reaction = Reaction('POR_syn')
 #The BiGG reaction uses a different ferredoxin
@@ -4561,7 +4563,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#lald__L_c + nadp_c <-> h_c + mthgxl_c + nadph_c
+# R0222 Methylglyoxal reductase (NADP) lald__L_c + nadp_c <-> h_c + mthgxl_c + nadph_c
 
 reaction = Reaction('MRN')
 #BiGG does not have this reaction
@@ -4580,7 +4582,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#gthrd_c + mthgxl_c <-> lgt__S_c
+# R0223 Lactoylglutathione lyase gthrd_c + mthgxl_c <-> lgt__S_c
 
 gthrd_c = Metabolite('gthrd_c', formula='C10H16N3O6S', name='Reduced glutathione', compartment='c', charge=-1)
 
@@ -4601,7 +4603,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#h2o_c + lgt__S_c ⇌ gthrd_c + h_c + lac__D_c
+# R0224 Hydroxyacylglutathione hydrolase h2o_c + lgt__S_c ⇌ gthrd_c + h_c + lac__D_c
 
 reaction = Reaction('GLYOX')
 
@@ -4620,7 +4622,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#acac_c + succoa_c ⇌ aacoa_c + succ_c
+# R0225 3-oxoacid CoA-transferase (Succinyl-CoA: acetoacetate) acac_c + succoa_c ⇌ aacoa_c + succ_c
 
 acac_c = Metabolite('acac_c', formula='C4H5O3', name='Acetoacetate', compartment='c', charge=-1)
 
@@ -4640,7 +4642,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#g6p_c <-> g6p_B_c
+# R0226 Glucose 6 phosphate isomerase g6p_c <-> g6p_B_c
 
 g6p_B_c = Metabolite('g6p_B_c', formula='C6H11O9P', name='Beta D glucose 6 phosphate', compartment='c', charge=-2)
 
@@ -4658,7 +4660,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#g6p_c + nadp_c <-> 6pgl_c + h_c + nadph_c
+# R0227 Glucose 6-phosphate dehydrogenase g6p_B_c + nadp_c <-> _6pgl_c + h_c + nadph_c
 
 _6pgl_c = Metabolite('_6pgl_c', formula='C6H9O9P', name='6-phospho-D-glucono-1,5-lactone', compartment='c', charge=-2)
 
@@ -4679,7 +4681,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#g6p_c + nadp_c <-> 6pgl_c + h_c + nadph_c
+# R0228 6-phosphogluconolactonase _6pgl_c + h2o_c <-> _6pgc_c + h_c
 
 _6pgc_c = Metabolite('_6pgc_c', formula='C6H10O10P', name='6-Phospho-D-gluconate', compartment='c', charge=-3)
 
@@ -4699,7 +4701,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#_6pgc_c + nadp_c <-> co2_c + nadph_c + ru5p__D_c
+# R0229 Phosphogluconate dehydrogenase _6pgc_c + nadp_c <-> co2_c + nadph_c + ru5p__D_c
 
 reaction = Reaction('GND')
 
@@ -4718,7 +4720,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#_6pgc_c + nad_c <-> co2_c + nadh_c + ru5p__D_c
+# R0230 Phosphogluconate dehydrogenase (NAD) _6pgc_c + nad_c <-> co2_c + nadh_c + ru5p__D_c
 
 reaction = Reaction('GND_nad')
 #BiGG does not have this reaction
@@ -4737,7 +4739,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#atp_c + rib__D_c <-> adp_c + h_c + r5p_c
+# R0231 Ribokinase atp_c + rib__D_c <-> adp_c + h_c + ru5p__D_c
 
 rib__D_c = Metabolite('rib__D_c', formula='C5H10O5', name='D-Ribose', compartment='c', charge=0)
 
@@ -4759,7 +4761,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#2dr5p_c <-> acald_c + g3p_c
+# R0232 Deoxyribose-phosphate aldolase _2dr5p_c <-> acald_c + g3p_c
 
 _2dr5p_c = Metabolite('_2dr5p_c', formula='C5H9O7P', name='2-Deoxy-D-ribose 5-phosphate', compartment='c', charge=-2)
 
@@ -4778,7 +4780,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#2dr5p_c <-> acald_c + g3p_c
+# R0233 Deoxyribokinase atp_c + drib_c <-> _2dr5p_c + adp_c + h_c
 
 drib_c = Metabolite('drib_c', formula='C5H10O4', name='Deoxyribose', compartment='c', charge=0)
 
@@ -4800,7 +4802,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#ah6p__D_c <-> f6p_c
+# R0234 Deoxyribokinase f6p_c <-> ah6p__D_c
 
 ah6p__D_c = Metabolite('ah6p__D_c', formula='C6H11O9P', name='Arabino-3-hexulose-6-P', compartment='c', charge=-2)
 #The charge of this metabolite differs from BiGG
@@ -4818,7 +4820,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#ah6p__D_c <-> ru5p__D_c + fald_c
+# R0235 3-hexulose-6-phosphate synthase ah6p__D_c <-> ru5p__D_c + fald_c
 
 fald_c = Metabolite('fald_c', formula='CH2O', name='Formaldehyde', compartment='c', charge=0)
 
@@ -4837,7 +4839,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#fald_c + h2o_c + nad_c ⇌ for_c + 2.0 h_c + nadh_c
+# R0236 Aldehyde dehydrogenase formaldehyde NAD fald_c + h2o_c + nad_c ⇌ for_c + 2.0 h_c + nadh_c
 
 reaction = Reaction('ALDD1')
 
@@ -4857,7 +4859,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#r1p_c <-> r5p_c
+# R0237 Phosphopentomutase r1p_c <-> r5p_c
 
 r1p_c = Metabolite('r1p_c', formula='C5H9O8P', name='Alpha-D-Ribose 1-phosphate', compartment='c', charge=-2)
 
@@ -4875,7 +4877,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-#h_c + pyr_c + lpam_c ⇌ co2_c + adhlam_c
+# R0238 Pyruvate dehydrogenase (lipoamide) h_c + pyr_c + lpam_c ⇌ co2_c + adhlam_c
 
 lpam_c = Metabolite('lpam_c', formula='C8H15NOS2', name='Lipoamide', compartment='c', charge=0)
 adhlam_c = Metabolite('adhlam_c', formula='C10H19NO2S2', name='S-Acetyldihydrolipoamide', compartment='c', charge=0)
@@ -4898,7 +4900,7 @@ model.add_reactions([reaction])
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 
-#coa_c + fmn_c + h_c + pyr_c ⇌ accoa_c + co2_c + fmnh2_c
+# R0239 PDH2c coa_c + fmn_c + 2.0 h_c + pyr_c ⇌ accoa_c + co2_c + fmnh2_c
 
 fmn_c = Metabolite('fmn_c', formula='C17H19N4O9P', name='FMN', compartment='c', charge=-3)
 fmnh2_c = Metabolite('fmnh2_c', formula='C17H21N4O9P', name='Reduced FMN', compartment='c', charge=-2)
