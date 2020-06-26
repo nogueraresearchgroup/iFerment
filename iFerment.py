@@ -4903,9 +4903,9 @@ print(reaction.name + ": " + str(reaction.check_mass_balance()))
 fmn_c = Metabolite('fmn_c', formula='C17H19N4O9P', name='FMN', compartment='c', charge=-3)
 fmnh2_c = Metabolite('fmnh2_c', formula='C17H21N4O9P', name='Reduced FMN', compartment='c', charge=-2)
 
-reaction = Reaction('PDH2')
+reaction = Reaction('PDH2c')
 #This reaction is not balanced in BiGG
-reaction.name = 'PDH2'
+reaction.name = 'PDH2c'
 reaction.subsystem = 'TCA Cycle'
 reaction.lower_bound = -1000  # This is the default
 reaction.upper_bound = 1000.  # This is the default
