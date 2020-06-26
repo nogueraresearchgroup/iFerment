@@ -5232,7 +5232,8 @@ print(type(model.solver))
 
 # Create .SBML model for use in other modeling platforms
 
-#cobra.io.write_sbml_model(model, "iChainElongateSugars.xml")
+cobra.io.write_sbml_model(model, "iFerment186_Plus.xml")
+#cobra.io.save_json_model(model, "iFerment186_Plus.json")
 
 
 #####################################
