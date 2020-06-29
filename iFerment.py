@@ -4842,7 +4842,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# R0236 Aldehyde dehydrogenase formaldehyde NAD fald_c + h2o_c + nad_c ⇌ for_c + 2.0 h_c + nadh_c
+# R0236 Aldehyde dehydrogenase formaldehyde NAD fald_c + h2o_c + nad_c <-> for_c + 2.0 h_c + nadh_c
 
 reaction = Reaction('ALDD1')
 
@@ -4922,6 +4922,120 @@ reaction.add_metabolites({coa_c: -1.0,
                           accoa_c: 1.0,
                           co2_c: 1.0,
                           fmnh2_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+# R0240 Isocitrate dehydrogenase (NADP) icit_c + nadp_c <-> akg_c + co2_c + nadph_c
+
+reaction = Reaction('ICDHyr')
+
+reaction.name = 'Isocitrate dehydrogenase (NADP)'
+reaction.subsystem = 'TCA Cycle'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({icit_c: -1.0,
+                          nadp_c: -1.0,
+                          akg_c: 1.0,
+                          co2_c: 1.0,
+                          nadph_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+# R0241 Malic enzyme (NADP) mal__L_c + nadp_c <-> co2_c + nadph_c + pyr_c
+
+reaction = Reaction('ME2')
+
+reaction.name = 'Malic enzyme (NADP)'
+reaction.subsystem = 'TCA Cycle'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({mal__L_c: -1.0,
+                          nadp_c: -1.0,
+                          pyr_c: 1.0,
+                          co2_c: 1.0,
+                          nadph_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+# R0242 Glycerol-3-phosphate dehydrogenase (NADP) glyc3p_c + nadp_c <-> dhap_c + h_c + nadph_c
+
+reaction = Reaction('G3PD2')
+
+reaction.name = 'Glycerol-3-phosphate dehydrogenase (NADP)'
+reaction.subsystem = 'TCA Cycle'
+reaction.lower_bound = -1000  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({glyc3p_c: -1.0,
+                          nadp_c: -1.0,
+                          dhap_c: 1.0,
+                          h_c: 1.0,
+                          nadph_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+# R0243 3-hydroxybutyryl-CoA dehydrogenase (NADP) aacoa_c + h_c + nadh_c <-> 3hbcoa_c + nad_c
+
+reaction = Reaction('HACD1a')
+#This reaction is not in BiGG
+reaction.name = '3-hydroxybutyryl-CoA dehydrogenase (NADP)'
+reaction.subsystem = 'Reverse Beta Oxidation'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({aacoa_c: -1.0,
+                          h_c: -1.0,
+                          nadph_c: -1.0,
+                          _3hbcoa_c: 1.0,
+                          nadp_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+# R0244 5, 10 methylenetetrahydrofolate reductase NADPH h_c + mlthf_c + nadph_c <-> 5mthf_c + nadp_c
+
+reaction = Reaction('MTHFR3_1')
+
+reaction.name = '5, 10 methylenetetrahydrofolate reductase NADPH'
+reaction.subsystem = 'Wood Ljungadhl Pathway'
+reaction.lower_bound = 0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({h_c: -1.0,
+                          mlthf_c: -1.0,
+                          nadph_c: -1.0,
+                          _5mthf_c: 1.0,
+                          nadp_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+# R0245 L-lactate dehydrogenase lac__L_c + nad_c <-> h_c + nadh_c + pyr_c
+
+reaction = Reaction('LDH_L')
+
+reaction.name = 'L-lactate dehydrogenase'
+reaction.subsystem = 'Lactate metabolism'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({lac__L_c: -1.0,
+                          nad_c: -1.0,
+                          h_c: 1.0,
+                          nadh_c: 1.0,
+                          pyr_c: 1.0})
 
 model.add_reactions([reaction])
 
