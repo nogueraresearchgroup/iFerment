@@ -4178,7 +4178,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# R0203 4-hydroxybutyrate coenzyme A transferase _4hbutcoa_c <-> ghb_c + coa_c
+# R0203 4-hydroxybutyrate coenzyme A transferase _4hbutcoa_c + h2o_c <-> ghb_c + coa_c
 
 ghb_c = Metabolite('ghb_c', formula='C4H8O3', name='Gamma-hydroxybutyrate', compartment='c', charge=0)
 #BiGG logs this metabolite in its unprotonated form 
@@ -4190,6 +4190,7 @@ reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({_4hbutcoa_c: -1.0,
+                          h2o_c: -1.0,
                           ghb_c: 1.0,
                           coa_c: 1.0})
 
@@ -4197,7 +4198,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# R0204 Gamma-hydroxybutyrate dehydrogenase (NADH) ghb_c + nad_c <-> sucsal_c + nadh_c + h_c
+# R0204 Gamma-hydroxybutyrate dehydrogenase (NADH) ghb_c + nad_c <-> sucsal_c + nadh_c + 2.0 h_c
 
 sucsal_c = Metabolite('sucsal_c', formula='C4H5O3', name='Succinate semialdehyde', compartment='c', charge=-1)
 
@@ -4212,7 +4213,7 @@ reaction.add_metabolites({ghb_c: -1.0,
                           nad_c: -1.0,
                           sucsal_c: 1.0,
                           nadh_c: 1.0,
-                          h_c: 1.0})
+                          h_c: 2.0})
 
 model.add_reactions([reaction])
 
@@ -4542,10 +4543,12 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# R0221 Pyruvate-ferredoxin oxidoreductase coa_c + pyr_c + 2.0 fdox_c <-> accoa_c + co2_c + h_c + 2.0 fdred_c
+# R0221 Pyruvate-ferredoxin oxidoreductase coa_c + pyr_c + 2.0 fdxox_c <-> accoa_c + co2_c + h_c + 2.0 fdxrd_c + h_c
+fdxrd_c = Metabolite('fdxrd_c', formula='Fe2S2X', name='Reduced ferredoxin', compartment='c', charge=-1)
+fdxox_c = Metabolite('fdxox_c', formula='Fe2S2X', name='Oxidized ferredoxin', compartment='c', charge=0)
 
 reaction = Reaction('POR_syn')
-#The BiGG reaction uses a different ferredoxin
+#This reaction differs from BiGG database because a different ferredoxin is used and H+ is a product for mass and charge balance
 reaction.name = 'Pyruvate-ferredoxin oxidoreductase'
 reaction.subsystem = 'Pyruvate Metabolism'
 reaction.lower_bound = -1000  # This is the default
@@ -4553,11 +4556,11 @@ reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({coa_c: -1.0,
                           pyr_c: -1.0,
-                          fdox_c: -2.0,
+                          fdxox_c: -2.0,
+                          h_c: 1.0,
                           accoa_c: 1.0,
                           co2_c: 1.0,
-                          h_c: 1.0,
-                          fdred_c: 2.0})
+                          fdxrd_c: 2.0})
 
 model.add_reactions([reaction])
 
@@ -4808,7 +4811,7 @@ ah6p__D_c = Metabolite('ah6p__D_c', formula='C6H11O9P', name='Arabino-3-hexulose
 #The charge of this metabolite differs from BiGG
 reaction = Reaction('AH6PI')
 
-reaction.name = 'Deoxyribokinase'
+reaction.name = 'Arabino-3-hexulose-6-P Isomerase'
 reaction.subsystem = 'Pentose Phosphate Pathway'
 reaction.lower_bound = -1000  # This is the default
 reaction.upper_bound = 1000.  # This is the default
@@ -4902,7 +4905,7 @@ print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 # R0239 PDH2c coa_c + fmn_c + 2.0 h_c + pyr_c ⇌ accoa_c + co2_c + fmnh2_c
 
-fmn_c = Metabolite('fmn_c', formula='C17H19N4O9P', name='FMN', compartment='c', charge=-3)
+fmn_c = Metabolite('fmn_c', formula='C17H18N4O9P', name='FMN', compartment='c', charge=-3)
 fmnh2_c = Metabolite('fmnh2_c', formula='C17H21N4O9P', name='Reduced FMN', compartment='c', charge=-2)
 
 reaction = Reaction('PDH2c')
