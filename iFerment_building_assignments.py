@@ -14,7 +14,7 @@ import copy
 #Below, I am using a SBML formatted version of the model, which is generated when the iFerment model is ran (Line 5235), 
 #effectively copying the model as "iFerment".
 
-iFerment = cobra.io.read_sbml_model("/Users/abeltingle/Desktop/MetabolicModeling/iFerment/iFerment186_Plus.xml")
+iFerment = cobra.io.read_sbml_model("iFerment186_Plus.xml")
 
 #A copy of iFerment is created for downstream purposes
 iFerment2 = copy.deepcopy(iFerment)
@@ -23,7 +23,7 @@ iFerment2 = copy.deepcopy(iFerment)
 microbe_select = ["Melsdenii", "Pacidpropionici", "Wbifida", "Ckluyveri", "Lacidophilus"]
 
 #NOTE: Again, the below path is specific to my personal Mac
-Assignment = pd.read_excel("/Users/abeltingle/Desktop/MetabolicModeling/iFerment/iFerment_assignments.xlsx")
+Assignment = pd.read_excel("iFerment_assignments.xlsx")
 
 #Counter below
 n = 0

@@ -4984,7 +4984,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# R0243 3-hydroxybutyryl-CoA dehydrogenase (NADP) aacoa_c + h_c + nadh_c <-> 3hbcoa_c + nad_c
+# R0243 3-hydroxybutyryl-CoA dehydrogenase (NADP) aacoa_c + h_c + nadph_c <-> _3hbcoa_c + nadp_c
 
 reaction = Reaction('HACD1a')
 #This reaction is not in BiGG
@@ -5003,7 +5003,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# R0244 5, 10 methylenetetrahydrofolate reductase NADPH h_c + mlthf_c + nadph_c <-> 5mthf_c + nadp_c
+# R0244 5, 10 methylenetetrahydrofolate reductase NADPH h_c + mlthf_c + nadph_c <-> _5mthf_c + nadp_c
 
 reaction = Reaction('MTHFR3_1')
 
