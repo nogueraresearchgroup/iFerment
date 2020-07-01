@@ -4997,7 +4997,7 @@ reaction.subsystem = 'Wood Ljungadhl Pathway'
 reaction.lower_bound = 0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
-reaction.add_metabolites({h_c: -1.0,
+reaction.add_metabolites({h_c: -2.0,
                           mlthf_c: -1.0,
                           nadph_c: -1.0,
                           _5mthf_c: 1.0,
