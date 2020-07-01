@@ -2574,7 +2574,7 @@
       </reaction>
       <reaction id="R_MTHFR3_1" name="5, 10 methylenetetrahydrofolate reductase NADPH" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
         <listOfReactants>
-          <speciesReference species="M_h_c" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_h_c" stoichiometry="2" constant="true"/>
           <speciesReference species="M_mlthf_c" stoichiometry="1" constant="true"/>
           <speciesReference species="M_nadph_c" stoichiometry="1" constant="true"/>
         </listOfReactants>

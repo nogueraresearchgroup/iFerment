@@ -3487,6 +3487,8 @@ reaction.add_metabolites({succ_e: -1.0,
 
 model.add_reactions([reaction])
 
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
 # R0172 Succinate import succ_e + h_e <-> succ_c + h_c
 
 reaction = Reaction('Succinate_import')
