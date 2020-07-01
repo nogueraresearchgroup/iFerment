@@ -3519,6 +3519,8 @@ reaction.add_metabolites({succ_c: -1.0,
                           succ_e: 1.0,
                           h_e: 1.0})
 
+model.add_reactions([reaction])
+
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 # Proton transport
