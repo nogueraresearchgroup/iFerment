@@ -3397,7 +3397,7 @@ reaction = Reaction('Lactate_import')
 reaction.name = 'Lactate import'
 reaction.subsystem = 'Transport'
 reaction.lower_bound = 0.  # This is the default
-reaction.upper_bound = 0.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({lac__D_e: -1.0,
                           h_e: -1.0,
@@ -4325,7 +4325,7 @@ reaction = Reaction('GLCpts')
 
 reaction.name = 'D-glucose transport via PEP:Pyr PTS'
 reaction.subsystem = 'Lower Glycolysis'
-reaction.lower_bound = 0  # This is the default
+reaction.lower_bound = 0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({pep_c: -1.0,
@@ -4343,7 +4343,7 @@ reaction = Reaction('SCH')
 
 reaction.name = 'Succinyl-CoA hydrolase'
 reaction.subsystem = 'Propionate Production'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({succoa_c: -1.0,
@@ -4364,7 +4364,7 @@ reaction = Reaction('MGSA')
 
 reaction.name = 'Methylglyoxal synthase'
 reaction.subsystem = 'Propionate Production'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({dhap_c: -1.0,
@@ -4383,7 +4383,7 @@ reaction = Reaction('ALCD22_L')
 
 reaction.name = 'Alcohol dehydrogenase (L-lactaldehyde)'
 reaction.subsystem = 'Propionate Production'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({lald__L_c: -1.0,
@@ -4404,7 +4404,7 @@ reaction = Reaction('ACCOAC')
 #This reaction differs from BiGG database because 4 h_c are being consumed so that the reaction is balanced
 reaction.name = 'Acetyl-CoA carboxylase'
 reaction.subsystem = 'Propionate Production'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({accoa_c: -1.0,
@@ -4426,7 +4426,7 @@ reaction = Reaction('PPCOAC')
 
 reaction.name = 'Propionyl-CoA carboxylase'
 reaction.subsystem = 'Propionate Production'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({atp_c: -1.0,
@@ -4450,7 +4450,7 @@ reaction = Reaction('LCADi')
 
 reaction.name = 'Lactaldehyde dehydrogenase'
 reaction.subsystem = 'Pyruvate Metabolism'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({h2o_c: -1.0,
@@ -4470,7 +4470,7 @@ reaction = Reaction('LacR')
 
 reaction.name = 'Lactate racemase'
 reaction.subsystem = 'Pyruvate Metabolism'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({lac__D_c: -1.0,
@@ -4486,7 +4486,7 @@ reaction = Reaction('SUCOAACTr')
 
 reaction.name = 'Succinyl-CoA:acetate CoA transferase'
 reaction.subsystem = 'TCA Cycle'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({ac_c: -1.0,
@@ -4504,7 +4504,7 @@ reaction = Reaction('SSALy')
 
 reaction.name = 'Succinate-semialdehyde dehydrogenase (NADP)'
 reaction.subsystem = 'TCA Cycle'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({h2o_c: -1.0,
@@ -4524,7 +4524,7 @@ reaction = Reaction('PPGPT')
 #This reaction is not in BiGG
 reaction.name = 'Phosphoenolpyruvate:glycerone phosphotransferase'
 reaction.subsystem = 'Pyruvate Metabolism'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({pep_c: -1.0,
@@ -4544,7 +4544,7 @@ reaction = Reaction('POR_syn')
 #This reaction differs from BiGG database because a different ferredoxin is used and H+ is a product for mass and charge balance
 reaction.name = 'Pyruvate-ferredoxin oxidoreductase'
 reaction.subsystem = 'Pyruvate Metabolism'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({coa_c: -1.0,
@@ -4565,7 +4565,7 @@ reaction = Reaction('MRN')
 #BiGG does not have this reaction
 reaction.name = 'Methylglyoxal reductase (NADP)'
 reaction.subsystem = 'Pyruvate Metabolism'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({lald__L_c: -1.0,
@@ -4588,7 +4588,7 @@ reaction = Reaction('LGTHL')
 
 reaction.name = 'Lactoylglutathione lyase'
 reaction.subsystem = 'Pyruvate Metabolism'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({gthrd_c: -1.0,
@@ -4605,7 +4605,7 @@ reaction = Reaction('GLYOX')
 
 reaction.name = 'Hydroxyacylglutathione hydrolase'
 reaction.subsystem = 'Pyruvate Metabolism'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({h2o_c: -1.0,
@@ -4626,7 +4626,7 @@ reaction = Reaction('OCOAT1')
 
 reaction.name = '3-oxoacid CoA-transferase (Succinyl-CoA: acetoacetate)'
 reaction.subsystem = 'TCA Cycle'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({acac_c: -1.0,
@@ -4646,7 +4646,7 @@ reaction = Reaction('G6PI')
 
 reaction.name = 'Glucose 6 phosphate isomerase'
 reaction.subsystem = 'Pentose Phosphate Pathway'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({g6p_c: -1.0,
@@ -4664,7 +4664,7 @@ reaction = Reaction('G6PDH2r')
 #BiGG does not use beta-glucose-6-phosphate in this reaction
 reaction.name = 'Glucose 6-phosphate dehydrogenase'
 reaction.subsystem = 'Pentose Phosphate Pathway'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({g6p_B_c: -1.0,
@@ -4685,7 +4685,7 @@ reaction = Reaction('PGL')
 #BiGG does not use beta-glucose-6-phosphate in this reaction
 reaction.name = '6-phosphogluconolactonase'
 reaction.subsystem = 'Pentose Phosphate Pathway'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({_6pgl_c: -1.0,
@@ -4703,7 +4703,7 @@ reaction = Reaction('GND')
 
 reaction.name = 'Phosphogluconate dehydrogenase'
 reaction.subsystem = 'Pentose Phosphate Pathway'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({_6pgc_c: -1.0,
@@ -4722,7 +4722,7 @@ reaction = Reaction('GND_nad')
 #BiGG does not have this reaction
 reaction.name = 'Phosphogluconate dehydrogenase (NAD)'
 reaction.subsystem = 'Pentose Phosphate Pathway'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({_6pgc_c: -1.0,
@@ -4743,7 +4743,7 @@ reaction = Reaction('RBK')
 
 reaction.name = 'Ribokinase'
 reaction.subsystem = 'Pentose Phosphate Pathway'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({atp_c: -1.0,
@@ -4765,7 +4765,7 @@ reaction = Reaction('DRPA')
 
 reaction.name = 'Deoxyribose-phosphate aldolase'
 reaction.subsystem = 'Pentose Phosphate Pathway'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({_2dr5p_c: -1.0,
@@ -4784,7 +4784,7 @@ reaction = Reaction('DRBK')
 
 reaction.name = 'Deoxyribokinase'
 reaction.subsystem = 'Pentose Phosphate Pathway'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({atp_c: -1.0,
@@ -4806,7 +4806,7 @@ reaction = Reaction('AH6PI')
 
 reaction.name = 'Arabino-3-hexulose-6-P Isomerase'
 reaction.subsystem = 'Pentose Phosphate Pathway'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({f6p_c: -1.0,
@@ -4824,7 +4824,7 @@ reaction = Reaction('H6PS')
 #This reaction is not in BiGG
 reaction.name = '3-hexulose-6-phosphate synthase'
 reaction.subsystem = 'Pentose Phosphate Pathway'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({ah6p__D_c: -1.0,
@@ -4841,7 +4841,7 @@ reaction = Reaction('ALDD1')
 
 reaction.name = 'Aldehyde dehydrogenase formaldehyde NAD'
 reaction.subsystem = 'Pentose Phosphate Pathway'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({fald_c: -1.0,
@@ -4863,7 +4863,7 @@ reaction = Reaction('PPM')
 
 reaction.name = 'Phosphopentomutase'
 reaction.subsystem = 'Pentose Phosphate Pathway'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({r1p_c: -1.0,
@@ -4882,7 +4882,7 @@ reaction = Reaction('PDHa')
 
 reaction.name = 'Pyruvate dehydrogenase (lipoamide)'
 reaction.subsystem = 'TCA Cycle'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({h_c: -1.0,
@@ -4905,7 +4905,7 @@ reaction = Reaction('PDH2c')
 #This reaction is not balanced in BiGG
 reaction.name = 'PDH2c'
 reaction.subsystem = 'TCA Cycle'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({coa_c: -1.0,
@@ -4926,7 +4926,7 @@ reaction = Reaction('ICDHyr')
 
 reaction.name = 'Isocitrate dehydrogenase (NADP)'
 reaction.subsystem = 'TCA Cycle'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({icit_c: -1.0,
@@ -4945,7 +4945,7 @@ reaction = Reaction('ME2')
 
 reaction.name = 'Malic enzyme (NADP)'
 reaction.subsystem = 'TCA Cycle'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({mal__L_c: -1.0,
@@ -4964,7 +4964,7 @@ reaction = Reaction('G3PD2')
 
 reaction.name = 'Glycerol-3-phosphate dehydrogenase (NADP)'
 reaction.subsystem = 'TCA Cycle'
-reaction.lower_bound = -1000  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({glyc3p_c: -1.0,
