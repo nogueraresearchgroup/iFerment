@@ -2682,23 +2682,8 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# R0129 Malate dehydrogenase mal__L_c + nad_c <-> h_c + nadh_c + oaa_c
+# R0129 REMOVED - DUPLICATE WITH REACTION R0076 -- Malate dehydrogenase mal__L_c + nad_c <-> h_c + nadh_c + oaa_c
 
-reaction = Reaction('MDH')
-reaction.name = 'Malate dehydrogenase'
-reaction.subsystem = 'TCA Cycle'
-reaction.lower_bound = -1000.  # This is the default
-reaction.upper_bound = 1000.  # This is the default
-
-reaction.add_metabolites({mal__L_c: -1.0,
-                          nad_c: -1.0,
-                          h_c: 1.0,
-                          nadh_c: 1.0,
-                          oaa_c: 1.0})
-
-model.add_reactions([reaction])
-
-print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 # R0130 Fumarase fum_c + h2o_c <-> mal__L_c
 
@@ -3390,7 +3375,7 @@ print(reaction.name + ": " + str(reaction.check_mass_balance()))
 # R0165 Octanoate export octa_c + h_c -> octa_e + h_e
 
 reaction = Reaction('Octanoate_export')
-reaction.name = 'Octanote export'
+reaction.name = 'Octanoate export'
 reaction.subsystem = 'Transport'
 reaction.lower_bound = 0.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
@@ -3760,7 +3745,7 @@ print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 # R0186 Succinate Transport ATP atp_c + h2o_c -> adp_c + pi_c + h_c
 
-eaction = Reaction('Succinate_Transport_ATP')
+reaction = Reaction('Succinate_Transport_ATP')
 reaction.name = 'Succinate Transport ATP'
 reaction.subsystem = 'ATP Hydrolysis'
 reaction.lower_bound = 0.  # This is the default
