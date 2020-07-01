@@ -4123,7 +4123,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# R0201 2-oxoglutarate ferredoxin oxidoreductase akg_c + coa_c + 2.0 fdox_c <-> co2_c + 2.0 h_c + succoa_c + 2.0 fdred_c
+# R0201 2-oxoglutarate ferredoxin oxidoreductase akg_c + coa_c + 2.0 fdox_c <-> co2_c + h_c + succoa_c + 2.0 fdred_c
 
 reaction = Reaction('OORr')
 #BiGG has a different reaction name for this reaction
@@ -4136,7 +4136,7 @@ reaction.add_metabolites({akg_c: -1.0,
                           coa_c: -1.0,
                           fdox_c: -2.0,
                           co2_c: 1.0,
-                          h_c: 2.0,
+                          h_c: 1.0,
                           succoa_c: 1.0,
                           fdred_c: 2.0})
 
