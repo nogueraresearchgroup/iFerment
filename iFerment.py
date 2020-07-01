@@ -4049,6 +4049,8 @@ reaction.add_metabolites({atp_c: -1.0,
 
 model.add_reactions([reaction])
 
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
 fadh2_c = Metabolite('fadh2_c', formula='C27H33N9O15P2', name='Flavin adenine dinucleotide reduced', compartment='c', charge=-2)
 fad_c = Metabolite('fad_c', formula='C27H31N9O15P2', name='Flavin adenine dinucleotide oxidized', compartment='c', charge=-2)
 
@@ -4066,6 +4068,8 @@ reaction.add_metabolites({fad_c: -1.0,
                           fum_c: 1.0})
                           
 model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 # R0198 2-Oxoglutarate dehydrogenase akg_c + nad_c + coa_c -> succoa_c + nadh_c + co2_c
 
@@ -4792,7 +4796,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# R0234 Deoxyribokinase f6p_c <-> ah6p__D_c
+# R0234 Arabino-3-hexulose-6-P Isomerase f6p_c <-> ah6p__D_c
 
 ah6p__D_c = Metabolite('ah6p__D_c', formula='C6H11O9P', name='Arabino-3-hexulose-6-P', compartment='c', charge=-2)
 #The charge of this metabolite differs from BiGG
