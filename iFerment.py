@@ -4988,7 +4988,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# R0244 5, 10 methylenetetrahydrofolate reductase NADPH h_c + mlthf_c + nadph_c <-> _5mthf_c + nadp_c
+# R0244 5, 10 methylenetetrahydrofolate reductase NADPH 2.0 h_c + mlthf_c + nadph_c <-> _5mthf_c + nadp_c
 
 reaction = Reaction('MTHFR3_1')
 
