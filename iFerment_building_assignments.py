@@ -35,14 +35,14 @@ for microbe in microbe_select:
 	#. . . for each reaction
     for index, row in Assignment.iterrows():
     	#. . . if there's a 1
-        if row[microbe_select[n]] == 1:
+        if row[microbe] == 1:
         	#Effectively, nothing happens. The master iFerment still possesses the reaction of interest.
         	#This line is intended for Jupyter Notebook.
-            print(iFerment.reactions.get_by_id(row['id']).upper_bound)
+            print(microbe, index, iFerment.reactions.get_by_id(row['id']).upper_bound)
         
         #And if there's not a 1, if there's a 0 for that reaction. . . 
         else:
-            print("I don't have this reaction" ,iFerment.reactions.get_by_id(row['id']))
+            print(microbe, index, "I don't have this reaction" ,iFerment.reactions.get_by_id(row['id']))
             #Then knock the reaction out. The master iFerment has been changed to mimmic the organism in microbe_select
             iFerment.reactions.get_by_id(row['id']).knock_out()
             
