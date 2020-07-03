@@ -5034,6 +5034,24 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
+# R0246 Methylenetetrahydrofolate dehydrogenase (NADP) mlthf_c + nadp_c <-> methf_c + nadph_c
+
+reaction = Reaction('MTHFD')
+
+reaction.name = 'Methylenetetrahydrofolate dehydrogenase (NADP)'
+reaction.subsystem = 'Wood Ljungadhl Pathway'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({mlthf_c: -1.0,
+                          nadp_c: -1.0,
+                          methf_c: 1.0,
+                          nadph_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
 # Summarize Model Reactions and Metabolites
 print("Reactions: " + str(len(model.reactions)))
 print("Metabolites: " + str(len(model.metabolites)))
