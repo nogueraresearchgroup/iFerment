@@ -5052,6 +5052,27 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
+# R0247 Succinate-semialdehyde dehydrogenase (NADP) h2o_c + nadp_c + sucsal_c <-> 2.0 h_c + nadph_c + succ_c
+
+reaction = Reaction('SSALy')
+
+reaction.name = 'Succinate-semialdehyde dehydrogenase (NADP)'
+reaction.subsystem = 'TCA Cycle'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({h2o_c: -1.0,
+                          nadp_c: -1.0,
+                          sucsal_c: -1.0,
+                          h_c: 2.0,
+                          nadph_c: 1.0,
+                          succ_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+
 # Summarize Model Reactions and Metabolites
 print("Reactions: " + str(len(model.reactions)))
 print("Metabolites: " + str(len(model.metabolites)))
