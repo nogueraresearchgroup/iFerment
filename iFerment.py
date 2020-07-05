@@ -5078,14 +5078,14 @@ print(model.medium)
 # model.reactions.EX_octa_e.knock_out()
 # model.reactions.EX_hxa_e.knock_out()
 # model.reactions.EX_but_e.knock_out()
-model.reactions.EX_ac_e.knock_out()
+# model.reactions.EX_ac_e.knock_out()
 # model.reactions.EX_lac__D_e.knock_out()
 # model.reactions.EX_h2_e.knock_out()
 # model.reactions.EX_etoh_e.knock_out()
 # model.reactions.EX_for_e.knock_out()
 # model.reactions.EX_ppa_e.knock_out()
-model.reactions.EX_pta_e.knock_out()
-model.reactions.EX_hpta_e.knock_out()
+# model.reactions.EX_pta_e.knock_out()
+# model.reactions.EX_hpta_e.knock_out()
 
 # To allow acetate uptake only
 #model.reactions.EX_ac_e.upper_bound = 0
@@ -5093,7 +5093,7 @@ model.reactions.EX_hpta_e.knock_out()
 #model.reactions.ACKr.lower_bound = 0
 
 # Turn off alcohol dehydrogenase (ethanol production)
-model.reactions.ALCD2x.knock_out()
+# model.reactions.ALCD2x.knock_out()
 
 # Turn off electron bifurcating acyl-CoA dehydrogenase
 # model.reactions.EBACD1.knock_out()
@@ -5104,11 +5104,11 @@ model.reactions.ALCD2x.knock_out()
 # model.reactions.EBVCD2.knock_out()
 
 # Turn off non-electron bifurcating acyl-CoA dehydrogenase
-model.reactions.ACOAD1.knock_out()
-model.reactions.ACOAD2.knock_out()
-model.reactions.ACOAD3.knock_out()
-model.reactions.VCOAD.knock_out()
-model.reactions.VCOAD2.knock_out()
+# model.reactions.ACOAD1.knock_out()
+# model.reactions.ACOAD2.knock_out()
+# model.reactions.ACOAD3.knock_out()
+# model.reactions.VCOAD.knock_out()
+# model.reactions.VCOAD2.knock_out()
 
 # Turn off CoaT
 # model.reactions.CoATC4.knock_out()
@@ -5118,7 +5118,7 @@ model.reactions.VCOAD2.knock_out()
 # model.reactions.CoATC7.knock_out()
 
 # Turn off Reverse beta oxidation in second step (HACD) Only need to restrict first one
-model.reactions.HACD1.knock_out()
+# model.reactions.HACD1.knock_out()
 # model.reactions.HACD2.knock_out()
 # model.reactions.HACD3.knock_out()
 # model.reactions.HVCD.knock_out()

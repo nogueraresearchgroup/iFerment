@@ -556,7 +556,7 @@
           <speciesReference species="M_adp_c" stoichiometry="1" constant="true"/>
         </listOfProducts>
       </reaction>
-      <reaction id="R_EX_ac_e" name="Acetate exchange" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_0_bound">
+      <reaction id="R_EX_ac_e" name="Acetate exchange" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
         <listOfReactants>
           <speciesReference species="M_ac_e" stoichiometry="1" constant="true"/>
         </listOfReactants>
@@ -616,7 +616,7 @@
           <speciesReference species="M_coa_c" stoichiometry="1" constant="true"/>
         </listOfProducts>
       </reaction>
-      <reaction id="R_HACD1" name="3-hydroxyacyl-CoA dehydrogenase (acetoacetyl-CoA)" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_0_bound">
+      <reaction id="R_HACD1" name="3-hydroxyacyl-CoA dehydrogenase (acetoacetyl-CoA)" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
         <listOfReactants>
           <speciesReference species="M_aacoa_c" stoichiometry="1" constant="true"/>
           <speciesReference species="M_h_c" stoichiometry="1" constant="true"/>
@@ -648,7 +648,7 @@
           <speciesReference species="M_fdred_c" stoichiometry="1" constant="true"/>
         </listOfProducts>
       </reaction>
-      <reaction id="R_ACOAD1" name="Acyl-CoA dehydrogenase (butanoyl-CoA)" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_0_bound">
+      <reaction id="R_ACOAD1" name="Acyl-CoA dehydrogenase (butanoyl-CoA)" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
         <listOfReactants>
           <speciesReference species="M_b2coa_c" stoichiometry="1" constant="true"/>
           <speciesReference species="M_nadh_c" stoichiometry="1" constant="true"/>
@@ -727,7 +727,7 @@
           <speciesReference species="M_fdred_c" stoichiometry="1" constant="true"/>
         </listOfProducts>
       </reaction>
-      <reaction id="R_ACOAD2" name="Acyl-CoA dehydrogenase (hexanoyl-CoA)" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_0_bound">
+      <reaction id="R_ACOAD2" name="Acyl-CoA dehydrogenase (hexanoyl-CoA)" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
         <listOfReactants>
           <speciesReference species="M_hx2coa_c" stoichiometry="1" constant="true"/>
           <speciesReference species="M_nadh_c" stoichiometry="1" constant="true"/>
@@ -806,7 +806,7 @@
           <speciesReference species="M_fdred_c" stoichiometry="1" constant="true"/>
         </listOfProducts>
       </reaction>
-      <reaction id="R_ACOAD3" name="Acyl-CoA dehydrogenase (octanoyl-CoA)" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_0_bound">
+      <reaction id="R_ACOAD3" name="Acyl-CoA dehydrogenase (octanoyl-CoA)" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
         <listOfReactants>
           <speciesReference species="M_oc2coa_c" stoichiometry="1" constant="true"/>
           <speciesReference species="M_nadh_c" stoichiometry="1" constant="true"/>
@@ -988,7 +988,7 @@
           <speciesReference species="M_fdred_c" stoichiometry="1" constant="true"/>
         </listOfProducts>
       </reaction>
-      <reaction id="R_VCOAD" name="Acyl-CoA dehydrogenase (pentanoyl-CoA)" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_0_bound">
+      <reaction id="R_VCOAD" name="Acyl-CoA dehydrogenase (pentanoyl-CoA)" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
         <listOfReactants>
           <speciesReference species="M_pt2coa_c" stoichiometry="1" constant="true"/>
           <speciesReference species="M_nadh_c" stoichiometry="1" constant="true"/>
@@ -1020,7 +1020,7 @@
           <speciesReference species="M_accoa_c" stoichiometry="1" constant="true"/>
         </listOfProducts>
       </reaction>
-      <reaction id="R_EX_pta_e" name="Pentanoate exchange" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_0_bound">
+      <reaction id="R_EX_pta_e" name="Pentanoate exchange" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
         <listOfReactants>
           <speciesReference species="M_pta_e" stoichiometry="1" constant="true"/>
         </listOfReactants>
@@ -1067,7 +1067,7 @@
           <speciesReference species="M_fdred_c" stoichiometry="1" constant="true"/>
         </listOfProducts>
       </reaction>
-      <reaction id="R_VCOAD2" name="Acyl-CoA dehydrogenase (heptanoyl-CoA)" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_0_bound">
+      <reaction id="R_VCOAD2" name="Acyl-CoA dehydrogenase (heptanoyl-CoA)" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
         <listOfReactants>
           <speciesReference species="M_ht2coa_c" stoichiometry="1" constant="true"/>
           <speciesReference species="M_nadh_c" stoichiometry="1" constant="true"/>
@@ -1099,7 +1099,7 @@
           <speciesReference species="M_accoa_c" stoichiometry="1" constant="true"/>
         </listOfProducts>
       </reaction>
-      <reaction id="R_EX_hpta_e" name="Heptanoate exchange" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_0_bound">
+      <reaction id="R_EX_hpta_e" name="Heptanoate exchange" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
         <listOfReactants>
           <speciesReference species="M_hpta_e" stoichiometry="1" constant="true"/>
         </listOfReactants>
@@ -1109,7 +1109,7 @@
           <speciesReference species="M_etoh_e" stoichiometry="1" constant="true"/>
         </listOfReactants>
       </reaction>
-      <reaction id="R_ALCD2x" name="Alcohol dehydrogenase (ethanol)" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_0_bound">
+      <reaction id="R_ALCD2x" name="Alcohol dehydrogenase (ethanol)" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
         <listOfReactants>
           <speciesReference species="M_etoh_c" stoichiometry="1" constant="true"/>
           <speciesReference species="M_nad_c" stoichiometry="1" constant="true"/>
