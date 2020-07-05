@@ -20,7 +20,7 @@ iFerment = cobra.io.read_sbml_model("iFerment186_Plus.xml")
 iFerment2 = copy.deepcopy(iFerment)
 
 #microbe_select is a string of corresponding to the headers in the iFerment_assignments file
-microbe_select = ["Melsdenii", "Pacidpropionici", "Wbifida", "Ckluyveri", "Lacidophilus"]
+microbe_select = ["Melsdenii", "Pacidpropionici", "Wbifida", "Ckluyveri", "Lacidophilus", "Dsuccinatiphilus", "Lbrevis"]
 
 #NOTE: Again, the below path is specific to my personal Mac
 Assignment = pd.read_excel("iFerment_assignments.xlsx")
