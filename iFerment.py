@@ -4119,7 +4119,7 @@ reaction = Reaction('OADDC')
 
 reaction.name = 'Oxaloacetate decarboxylase'
 reaction.subsystem = 'TCA Cycle'
-reaction.lower_bound = 0.  # This is the default
+reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({h_c: -1.0,
