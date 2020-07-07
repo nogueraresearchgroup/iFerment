@@ -5157,11 +5157,11 @@ model.reactions.HYDABC.knock_out()
 # model.reactions.MCC.knock_out()
 
 # Turn off homoacetogensis
-model.reactions.MCC.knock_out()
+# model.reactions.MCC.knock_out()
 
 # Turn off homoacetogensis
-model.reactions.CODH4.knock_out()
-model.reactions.FDH.knock_out()
+# model.reactions.CODH4.knock_out()
+# model.reactions.FDH.knock_out()
 
 # This is where we set the objective function
 model.objective = 'EX_BIOMASS'
