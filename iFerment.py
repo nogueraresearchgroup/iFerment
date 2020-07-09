@@ -4131,7 +4131,10 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# R0201 2-oxoglutarate ferredoxin oxidoreductase akg_c + coa_c + 2.0 fdox_c <-> co2_c + h_c + succoa_c + 2.0 fdred_c
+# R0201 2-oxoglutarate ferredoxin oxidoreductase akg_c + coa_c + 2.0 fdxox_c <-> co2_c + h_c + succoa_c + 2.0 fdxrd_c
+
+fdxrd_c = Metabolite('fdxrd_c', formula='Fe2S2X', name='Reduced ferredoxin', compartment='c', charge=-1)
+fdxox_c = Metabolite('fdxox_c', formula='Fe2S2X', name='Oxidized ferredoxin', compartment='c', charge=0)
 
 reaction = Reaction('OORr')
 #BiGG has a different reaction name for this reaction
@@ -4142,11 +4145,11 @@ reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({akg_c: -1.0,
                           coa_c: -1.0,
-                          fdox_c: -2.0,
+                          fdxox_c: -2.0,
                           co2_c: 1.0,
                           h_c: 1.0,
                           succoa_c: 1.0,
-                          fdred_c: 2.0})
+                          fdxrd_c: 2.0})
 
 model.add_reactions([reaction])
 
@@ -4171,7 +4174,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# R0203 4-hydroxybutyrate coenzyme A transferase _4hbutcoa_c + h2o_c <-> ghb_c + coa_c
+# R0203 4-hydroxybutyrate coenzyme A transferase _4hbutcoa_c <-> ghb_c + coa_c
 
 ghb_c = Metabolite('ghb_c', formula='C4H8O3', name='Gamma-hydroxybutyrate', compartment='c', charge=0)
 #BiGG logs this metabolite in its unprotonated form 
@@ -4183,7 +4186,6 @@ reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
 reaction.add_metabolites({_4hbutcoa_c: -1.0,
-                          h2o_c: -1.0,
                           ghb_c: 1.0,
                           coa_c: 1.0})
 
@@ -4191,7 +4193,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# R0204 Gamma-hydroxybutyrate dehydrogenase (NADH) ghb_c + nad_c <-> sucsal_c + nadh_c + 2.0 h_c
+# R0204 Gamma-hydroxybutyrate dehydrogenase (NADH) ghb_c + nad_c <-> sucsal_c + nadh_c + h_c
 
 sucsal_c = Metabolite('sucsal_c', formula='C4H5O3', name='Succinate semialdehyde', compartment='c', charge=-1)
 
@@ -4206,7 +4208,7 @@ reaction.add_metabolites({ghb_c: -1.0,
                           nad_c: -1.0,
                           sucsal_c: 1.0,
                           nadh_c: 1.0,
-                          h_c: 2.0})
+                          h_c: 1.0})
 
 model.add_reactions([reaction])
 
@@ -4537,8 +4539,6 @@ model.add_reactions([reaction])
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 # R0221 Pyruvate-ferredoxin oxidoreductase coa_c + pyr_c + 2.0 fdxox_c <-> accoa_c + co2_c + h_c + 2.0 fdxrd_c + h_c
-fdxrd_c = Metabolite('fdxrd_c', formula='Fe2S2X', name='Reduced ferredoxin', compartment='c', charge=-1)
-fdxox_c = Metabolite('fdxox_c', formula='Fe2S2X', name='Oxidized ferredoxin', compartment='c', charge=0)
 
 reaction = Reaction('POR_syn')
 #This reaction differs from BiGG database because a different ferredoxin is used and H+ is a product for mass and charge balance
@@ -5052,31 +5052,110 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# R0247 Succinate-semialdehyde dehydrogenase (NADP) h2o_c + nadp_c + sucsal_c <-> 2.0 h_c + nadph_c + succ_c
-
-reaction = Reaction('SSALy')
-
-reaction.name = 'Succinate-semialdehyde dehydrogenase (NADP)'
-reaction.subsystem = 'TCA Cycle'
-reaction.lower_bound = -1000.  # This is the default
-reaction.upper_bound = 1000.  # This is the default
-
-reaction.add_metabolites({h2o_c: -1.0,
-                          nadp_c: -1.0,
-                          sucsal_c: -1.0,
-                          h_c: 2.0,
-                          nadph_c: 1.0,
-                          succ_c: 1.0})
-
-model.add_reactions([reaction])
-
-print(reaction.name + ": " + str(reaction.check_mass_balance()))
-
+# R0247 
 
 # Summarize Model Reactions and Metabolites
 print("Reactions: " + str(len(model.reactions)))
 print("Metabolites: " + str(len(model.metabolites)))
 print("Genes: " + str(len(model.genes)))
+
+# R0247 NADH-dependent Reduced Ferredoxin:NADP Oxidoreductase 
+# nadh_c + h_c + 2.0 nadp_c + 2.0 fdxox_c <-> nad_c + 2.0 nadph_c + 2.0 fdxrd_c
+
+reaction = Reaction('THDF')
+#BiGG does not have this reaction.
+reaction.name = 'NADH-dependent Reduced Ferredoxin:NADP Oxidoreductase'
+reaction.subsystem = 'NADH/ NADPH Conversions'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({nadh_c: -1.0,
+                          h_c: -1.0,
+                          nadp_c: -2.0,
+                          fdxrd_c: -2.0,
+                          nad_c: 1.0,
+                          nadph_c: 2.0,
+                          fdxox_c: 2.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+# R0248 Ferredoxin---NADP+ reductase nadp_c + 2.0 fdxrd_c <-> nadph_c + 2.0 fdxox_c 
+
+reaction = Reaction('FNOR')
+##This reaction differs from BiGG database because a different ferredoxin is used and H+ is a product for mass and charge balance
+reaction.name = 'Ferredoxin---NADP+ reductase'
+reaction.subsystem = 'Electron Bifurcation'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({nadp_c: -1.0,
+                          fdxrd_c: -2.0,
+                          nadph_c: 1.0,
+                          fdxox_c: 2.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+# R0248 FMN reductase NADPH dependent fmn_c + 2.0 h_c + nadph_c <-> fmnh2_c + nadp_c
+
+reaction = Reaction('FMNRy_1')
+
+reaction.name = 'FMN reductase NADPH dependent'
+reaction.subsystem = 'Electron Bifurcation'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({fmn_c: -1.0,
+                          h_c: -2.0,
+                          nadph_c: -1.0,
+                          fmnh2_c: 1.0,
+                          nadp_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+# R0249 NAD:FAD oxidoreductase fadh2_c + 2.0 nad_c + fdred_c <-> fad_c + 2.0 nadh_c + fdox_c
+
+reaction = Reaction('NADFADOR')
+
+reaction.name = 'NAD:FAD oxidoreductase'
+reaction.subsystem = 'Electron Bifurcation'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({fadh2_c: -1.0,
+                          nad_c: -2.0,
+                          fdred_c: -1.0,
+                          fad_c: 1.0,
+                          nadh_c: 2.0,
+                          fdox_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+# R0250 FMN reductase fmn_c + h_c + nadh_c <-> fmnh2_c + nad_c
+
+reaction = Reaction('FMNRx')
+
+reaction.name = 'FMN reductase'
+reaction.subsystem = 'Electron Bifurcation'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({fmn_c: -1.0,
+                          h_c: -1.0,
+                          nadh_c: -1.0,
+                          fmnh2_c: 1.0,
+                          nad_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
 ##################################
 ###Part III: SUBSTRATE UPTAKE#####
