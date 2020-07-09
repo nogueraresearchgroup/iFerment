@@ -46,19 +46,21 @@ for microbe in microbe_select:
             #Then knock the reaction out. The master iFerment has been changed to mimmic the organism in microbe_select
             iFerment.reactions.get_by_id(row['id']).knock_out()
             
-    #This is for Jupyter Notebook
-    print("You're on the last one")
-    #Then perform a pfba using the iFerment model given the knock outs, and. . . 
-    pfba_solution = cobra.flux_analysis.pfba(iFerment)
-    #Generate an excel sheet with pfba solutions.
-    writer = pd.ExcelWriter("iFermentAs" + microbe + ".xlsx")
-    pfba_solution.fluxes.to_excel(writer,'Sheet1')
-    writer.save()
+        #If iterated reaction is currently the last reaction. . . 
+        if iFerment.reactions.get_by_id(row['id']) == iFerment.reactions[-1]:
+        	#This is for Jupyter Notebook
+            print("You're on the last one")
+            #Then perform a pfba using the iFerment model given the knock outs, and. . . 
+            pfba_solution = cobra.flux_analysis.pfba(iFerment)
+            #Generate an excel sheet with pfba solutions.
+            writer = pd.ExcelWriter("iFermentAs" + microbe_select[n] + ".xlsx")
+            pfba_solution.fluxes.to_excel(writer,'Sheet1')
+            writer.save()
             
-    #The current version of iFerment possesses knockouts, so. . . 
+            #The current version of iFerment possesses knockouts, so. . . 
             
-    #Revert it to its master version with no knockouts.
-    iFerment = copy.deepcopy(iFerment2)
+            #Revert it to its master version with no knockouts.
+            iFerment = copy.deepcopy(iFerment2)
             
-    #Next microbe in microbe_select.
-    n=n+1
+            #Next microbe in microbe_select.
+            n=n+1
