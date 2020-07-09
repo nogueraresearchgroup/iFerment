@@ -54,11 +54,6 @@ for microbe in microbe_select:
     writer = pd.ExcelWriter("iFermentAs" + microbe + ".xlsx")
     pfba_solution.fluxes.to_excel(writer,'Sheet1')
     writer.save()
-
-    #Generate an excel sheet with all pfba solutions combined
-    writer = pd.ExcelWriter("output.xlsx", engine="openpyxl", mode="a")
-    pfba_solution.fluxes.to_excel(writer, "Main", startcol=2*n)
-    writer.save()
             
     #The current version of iFerment possesses knockouts, so. . . 
             
