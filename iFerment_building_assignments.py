@@ -35,7 +35,7 @@ for microbe in microbe_select:
 	#. . . for each reaction
     for index, row in Assignment.iterrows():
     	#. . . if there's a 1
-        if row[microbe_select[n]] == 1:
+        if row[microbe] == 1:
         	#Effectively, nothing happens. The master iFerment still possesses the reaction of interest.
         	#This line is intended for Jupyter Notebook.
             print(iFerment.reactions.get_by_id(row['id']).upper_bound)
@@ -49,11 +49,11 @@ for microbe in microbe_select:
         #If iterated reaction is currently the last reaction. . . 
 
 #This is for Jupyter Notebook
-print("You're on the last one")
+print(microbe, "You're on the last one")
 #Then perform a pfba using the iFerment model given the knock outs, and. . . 
 pfba_solution = cobra.flux_analysis.pfba(iFerment)
 #Generate an excel sheet with pfba solutions.
-writer = pd.ExcelWriter("iFermentAs" + microbe_select[n] + ".xlsx")
+writer = pd.ExcelWriter("iFermentAs" + microbe + ".xlsx")
 pfba_solution.fluxes.to_excel(writer,'Sheet1')
 writer.save()
             
