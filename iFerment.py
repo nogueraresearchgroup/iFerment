@@ -2672,7 +2672,7 @@ reaction.subsystem = 'TCA Cycle'
 reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
-reaction.add_metabolites({cit_c: -1.0,
+reaction.add_metabolites({icit_c: -1.0,
                           nad_c: -1.0,
                           akg_c: 1.0,
                           co2_c: 1.0,
