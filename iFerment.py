@@ -5228,61 +5228,6 @@ print(model.medium)
 ##PART IV: SET ADDITIONAL CONSTRAINTS##
 #######################################
 
-# Turn off end products
-# model.reactions.EX_octa_e.knock_out()
-# model.reactions.EX_hxa_e.knock_out()
-# model.reactions.EX_but_e.knock_out()
-model.reactions.EX_ac_e.knock_out()
-# model.reactions.EX_lac__D_e.knock_out()
-# model.reactions.EX_h2_e.knock_out()
-# model.reactions.EX_etoh_e.knock_out()
-# model.reactions.EX_for_e.knock_out()
-# model.reactions.EX_ppa_e.knock_out()
-model.reactions.EX_pta_e.knock_out()
-model.reactions.EX_hpta_e.knock_out()
-
-# To allow acetate uptake only
-#model.reactions.EX_ac_e.upper_bound = 0
-# model.reactions.ACKr.knock_out()
-#model.reactions.ACKr.lower_bound = 0
-
-# Turn off alcohol dehydrogenase (ethanol production)
-model.reactions.ALCD2x.knock_out()
-
-# Turn off electron bifurcating acyl-CoA dehydrogenase
-# model.reactions.EBACD1.knock_out()
-# model.reactions.EBACD2.knock_out()
-# model.reactions.EBACD3.knock_out()
-# model.reactions.EBACD3.knock_out()
-# model.reactions.EBVCD.knock_out()
-# model.reactions.EBVCD2.knock_out()
-
-# Turn off non-electron bifurcating acyl-CoA dehydrogenase
-model.reactions.ACOAD1.knock_out()
-model.reactions.ACOAD2.knock_out()
-model.reactions.ACOAD3.knock_out()
-model.reactions.VCOAD.knock_out()
-model.reactions.VCOAD2.knock_out()
-
-# Turn off CoaT
-# model.reactions.CoATC4.knock_out()
-# model.reactions.CoATC6.knock_out()
-# model.reactions.CoATC8.knock_out()
-# model.reactions.CoATC5.knock_out()
-# model.reactions.CoATC7.knock_out()
-
-# Turn off Reverse beta oxidation in second step (HACD) Only need to restrict first one
-model.reactions.HACD1.knock_out()
-# model.reactions.HACD2.knock_out()
-# model.reactions.HACD3.knock_out()
-# model.reactions.HVCD.knock_out()
-# model.reactions.HVCD2.knock_out()
-
-# Turn of RNF Complex
-# model.reactions.RNF1.knock_out()
-
-# Turn of PFOR
-# model.reactions.PFOR.knock_out()
 
 # Constrain Hydrogenases to Avoid Loops
 # Turn off hydrogenases
@@ -5291,31 +5236,7 @@ model.reactions.HACD1.knock_out()
 model.reactions.HYD1.lower_bound = 0
 #model.reactions.ECH.lower_bound = 0
 # model.reactions.ECH.knock_out()
-model.reactions.HYDABC.knock_out()
-
-# Turn off Phosphoketolase
-# model.reactions.PKETX.knock_out()
-# model.reactions.RPE.knock_out()
-# model.reactions.GLCabc.knock_out()
-# model.reactions.PDH.knock_out()
-#model.reactions.PFL.upper_bound = 1
-
-# model.reactions.PKETF.knock_out()
-
-# Turn of Odd-chain Production
-
-# Turn off propionate production via acryloyl-CoA pathway
-# model.reactions.LCD.knock_out()
-
-# Turn off propionate production via methylmalonyl-CoA pathway
-# model.reactions.MCC.knock_out()
-
-# Turn off homoacetogensis
-model.reactions.MCC.knock_out()
-
-# Turn off homoacetogensis
-model.reactions.CODH4.knock_out()
-model.reactions.FDH.knock_out()
+#model.reactions.HYDABC.knock_out()
 
 # This is where we set the objective function
 model.objective = 'EX_BIOMASS'
