@@ -5060,7 +5060,7 @@ print("Metabolites: " + str(len(model.metabolites)))
 print("Genes: " + str(len(model.genes)))
 
 # R0247 NADH-dependent Reduced Ferredoxin:NADP Oxidoreductase 
-# nadh_c + h_c + 2.0 nadp_c + 2.0 fdxox_c <-> nad_c + 2.0 nadph_c + 2.0 fdxrd_c
+# nadh_c + h_c + 2.0 nadp_c + 2.0 fdxrd_c <-> nad_c + 2.0 nadph_c + 2.0 fdxox_c
 
 reaction = Reaction('THDF')
 #BiGG does not have this reaction.
