@@ -5157,9 +5157,7 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
-# R0251 Carbon dioxide hydration co2_c + h2o_c <-> h2co3_c
-
-h2co3_c = Metabolite('h2co3_c', formula='H2CO3', name='Carbonic acid', compartment='c', charge=0)
+# R0251 Carbon dioxide hydration co2_c + h2o_c <-> hco3_c + h_c
 
 reaction = Reaction('CDH')
 #BiGG does not have this reaction
@@ -5168,24 +5166,8 @@ reaction.subsystem = 'Carbonate System'
 reaction.lower_bound = -1000.  # This is the default
 reaction.upper_bound = 1000.  # This is the default
 
-reaction.add_metabolites({co2_c: -1.0,
+reaction.add_metabolites({co2_e: -1.0,
                           h2o_c: -1.0,
-                          h2co3_c: 1.0})
-
-model.add_reactions([reaction])
-
-print(reaction.name + ": " + str(reaction.check_mass_balance())) 
-
-# R0252 Bicarbonate equilibrium h2co3_c <-> hco3_c + h_c
-
-reaction = Reaction('BE')
-#BiGG does not have this reaction
-reaction.name = 'Bicarbonate equilibrium'
-reaction.subsystem = 'Carbonate System'
-reaction.lower_bound = -1000.  # This is the default
-reaction.upper_bound = 1000.  # This is the default
-
-reaction.add_metabolites({h2co3_c: -1.0,
                           hco3_c: 1.0,
                           h_c: 1.0})
 
