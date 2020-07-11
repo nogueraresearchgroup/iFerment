@@ -5198,7 +5198,7 @@ medium["EX_octa_e"] = 0
 medium["EX_ppa_e"] = 0
 medium["EX_pta_e"] = 0
 medium["EX_hpta_e"] = 0
-medium["EX_co2_e"] = 0
+medium["EX_co2_e"] = 1
 medium["EX_for_e"] = 0
 medium["EX_succ_e"] = 0
 
