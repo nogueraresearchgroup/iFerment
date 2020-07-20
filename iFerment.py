@@ -5175,6 +5175,37 @@ model.add_reactions([reaction])
 
 print(reaction.name + ": " + str(reaction.check_mass_balance()))
 
+#R0252 L-lactate transport lac__L_e <-> lac__L_c
+
+lac__L_e = Metabolite('lac__L_e', formula='C3H5O3', name='L-Lactate', compartment='e', charge=-1)
+
+reaction = Reaction('LACLt')
+reaction.name = 'L-Lactate transport'
+reaction.subsystem = 'Transport'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({lac__L_e: -1.0,
+                          lac__L_c: 1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
+#R0253 L-lactate exchange lac__D_e <->
+
+reaction = Reaction('EX_lac__L_e')
+reaction.name = 'L-Lactate exchange'
+reaction.subsystem = 'Transport'
+reaction.lower_bound = -1000.  # This is the default
+reaction.upper_bound = 1000.  # This is the default
+
+reaction.add_metabolites({lac__L_e: -1.0})
+
+model.add_reactions([reaction])
+
+print(reaction.name + ": " + str(reaction.check_mass_balance()))
+
 ##################################
 ###Part III: SUBSTRATE UPTAKE#####
 ##################################
@@ -5189,6 +5220,7 @@ medium["EX_glc4_e"] = 0  # 0.0081 #mmol/hr/gDW
 medium["EX_glc__D_e"] = 1  # 0.0125 #mmol/hr/gDW
 medium["EX_glyc_e"] = 0  # 0.0360 #mmol/hr/gDW
 medium["EX_lac__D_e"] = 0  # 0.0005 #mmol/hr/gDW
+medium["EX_lac__L_e"] = 0 
 medium["EX_etoh_e"] = 0
 medium["EX_ac_e"] = 0
 medium["EX_but_e"] = 0
@@ -5288,7 +5320,8 @@ model.summary()
 XYL = pfba_solution["EX_xyl__D_e"]
 GLC = pfba_solution["EX_glc__D_e"]
 GLYC = pfba_solution["EX_glyc_e"]
-LAC = pfba_solution["EX_lac__D_e"]
+LACD = pfba_solution["EX_lac__D_e"]
+LACL = pfba_solution["EX_lac__L_e"]
 ETOH = pfba_solution["EX_etoh_e"]
 H2 = pfba_solution["EX_h2_e"]
 H2O = pfba_solution["EX_h2o_e"]
